@@ -69,8 +69,8 @@ int main(int argc, char* argb[])
 	// Initialize window
 	GLFWwindow* window = window_init();
 
-	// Run the OpenGL application
-	runEngine(window);
+	// Run the OpenGL engine
+	Engine::runEngine(window);
 
 	// Delete all of GLFW's allocated resources
 	glfwTerminate();

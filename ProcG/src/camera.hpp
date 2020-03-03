@@ -10,7 +10,7 @@
 #include <GLFW/glfw3.h>
 
 
-namespace Gloom
+namespace ProcG
 {
     class Camera
     {

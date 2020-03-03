@@ -5,15 +5,16 @@
 #include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
 
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+Engine* Engine::engineInstance = NULL;
 
-void runEngine(GLFWwindow* window)
+Engine::Engine(GLFWwindow* window)
 {
 	// Enable depth buffer
 	glEnable(GL_DEPTH_TEST);
@@ -42,6 +43,15 @@ void runEngine(GLFWwindow* window)
 	}
 }
 
+void Engine::runEngine(GLFWwindow* window)
+{
+	if (!engineInstance)
+	{
+		engineInstance = new Engine(window);
+	}
+}
+
+// TODO: MOVE THIS
 void processKeyboardInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

@@ -2,10 +2,22 @@
 #define ENGINE_HPP
 #pragma once
 
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include "sceneGraph.hpp"
 
-void runEngine(GLFWwindow* window);
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+class Engine
+{
+private:
+	static Engine* engineInstance;
+	Engine(GLFWwindow* window);
+	GLFWwindow* window;
+	SceneNode* sceneRootNode;
+
+public:
+	static void runEngine(GLFWwindow* window);
+};
 
 void processKeyboardInput(GLFWwindow* window);
 

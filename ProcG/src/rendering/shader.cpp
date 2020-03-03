@@ -15,7 +15,7 @@ GLuint createShaderObject(std::string const& filename)
 	else                    return false;
 }
 
-void Shader::attach(std::string const& filename)
+void ProcG::Shader::attach(std::string const& filename)
 {
 	// Load the GLSL Shader from the file
 	std::ifstream fd(filename.c_str());
@@ -52,7 +52,7 @@ void Shader::attach(std::string const& filename)
 	glDeleteShader(shader);
 }
 
-void Shader::link()
+void ProcG::Shader::link()
 {
 	// Link all attached shaders
 	glLinkProgram(mShaderProgram);
@@ -69,7 +69,7 @@ void Shader::link()
 	assert(mStatus);
 }
 
-void Shader::makeBasicShader(std::string const& vertexFilename,
+void ProcG::Shader::makeBasicShader(std::string const& vertexFilename,
 	std::string const& fragmentFilename,
 	std::string const& geometryFilename)
 {
@@ -79,12 +79,12 @@ void Shader::makeBasicShader(std::string const& vertexFilename,
 	link();
 }
 
-GLint Shader::getUniformFromName(std::string const& uniformName) 
+GLint ProcG::Shader::getUniformFromName(std::string const& uniformName) 
 {
 	return glGetUniformLocation(this->get(), uniformName.c_str());
 }
 
-bool Shader::isValidProgram()
+bool ProcG::Shader::isValidProgram()
 {
 	// Validate linked shader program
 	glValidateProgram(mShaderProgram);

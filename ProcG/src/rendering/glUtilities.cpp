@@ -22,7 +22,6 @@ unsigned int generateAttribute(int id, int elementsPerEntry, std::vector<T> data
     return bufferID;
 }
 
-/* Generates a Vertex Array Object and copies attributes from a mesh into it */
 unsigned int generateVAO(Mesh &mesh) 
 {
 	// Setting up VAO
