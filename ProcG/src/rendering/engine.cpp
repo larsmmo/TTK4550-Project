@@ -1,7 +1,6 @@
 #include "engine.hpp"
 #include "shader.hpp"
 #include "shapes.h"
-#include "glUtilities.h"
 #include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
 

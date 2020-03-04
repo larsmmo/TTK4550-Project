@@ -12,7 +12,7 @@ out vec4 fragPos;		// EmitVertex output
 void main()
 {
 	for (int face = 0; face < 6; face++){
-		gl_Layer = face;								// Specify which face we render to
+		gl_Layer = face;									// Specify which face we render to
 		for (int i = 0; i < 3; i++){
 			fragPos = gl_in[i].gl_Position;
 			gl_Position = shadowMatrices[face] * fragPos;
