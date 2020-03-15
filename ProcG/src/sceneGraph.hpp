@@ -56,9 +56,12 @@ struct SceneNode {
 	SceneNodeType nodeType;
 };
 
+struct GeometryNode : public SceneNode
+{
+
+};
+
 SceneNode* createSceneNode();
 void addChild(SceneNode* parent, SceneNode* child);
 void printNode(SceneNode* node);
 int totalChildren(SceneNode* parent);
-
-// For more details, see SceneGraph.cpp.

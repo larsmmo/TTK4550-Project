@@ -1,22 +1,11 @@
-// System headers
+
+#include "context.hpp"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// Local headers
-#include "utilities/windowSettings.h"
-#include "rendering/application.hpp"
 
-// Standard headers
-#include <cstdlib>
-#include <string>
-
-// Callback function for letting GLFW report errors as they occur
-static void glfwErrorCallback(int err, const char* description)
-{
-	fprintf(stderr, "GLFW error: \n \t%s (%i)\n", description, err);
-}
-
-GLFWwindow* window_init()
+openGLContext::openGLContext(const Config& config)
 {
 	// Initializing GLFW
 	if (!glfwInit())
@@ -36,13 +25,13 @@ GLFWwindow* window_init()
 	glfwSetErrorCallback(glfwErrorCallback);
 
 	GLFWwindow* window = glfwCreateWindow(windowWidth,
-										  windowHeight,
-										  windowTitle.c_str(),
-										  nullptr,
-										  nullptr);
-	if (!window) 
+		windowHeight,
+		windowTitle.c_str(),
+		nullptr,
+		nullptr);
+	if (!window)
 	{
-		fprintf(stderr,"Failed to create GLFW window\n");
+		fprintf(stderr, "Failed to create GLFW window\n");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
@@ -60,20 +49,5 @@ GLFWwindow* window_init()
 	printf("GLFW version\t %s\n", glfwGetVersionString());
 	printf("OpenGL version\t %s\n", glGetString(GL_VERSION));
 	printf("GLSL version\t %s\n\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-	return window;
 }
 
-int main(int argc, char* argb[])
-{
-	// Initialize window
-	GLFWwindow* window = window_init();
-
-	// Run the OpenGL engine
-	Engine::runEngine(window);
-
-	// Delete all of GLFW's allocated resources
-	glfwTerminate();
-
-	return EXIT_SUCCESS;
-}

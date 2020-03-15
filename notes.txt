@@ -1,0 +1,8 @@
+Streetlamp: Shape, position, properties, attributes, texture
+
+
+Sphere: Shape, position, orientation, texture
+Box: Shape, position, orientation, texture
+
+Want to create a glowing box:
+Input: size, position, orientation

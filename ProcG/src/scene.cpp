@@ -63,33 +63,6 @@ Scene::Scene()
 	// Set up cubemap and frame buffer for shadow mapping
 	glGenFramebuffers(1, &depthMapFrameBuffer);
 
-	// Each of the 6 faces is a 2D depth-value texture
-	for (int light = 0; light < numLights; light++) {
-		glGenTextures(1, &depthCubemap[light]);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap[light]);
-		for (unsigned int i = 0; i < 6; ++i) {
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);		// create textures
-		}
-		// Set texture parameters
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-		// Attach cubemap as the depth attachment of the framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFrameBuffer);
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap[light], 0);
-
-		// Tell OpenGL not to not render to color buffer (only need depth values)
-		glDrawBuffer(GL_NONE);
-		glReadBuffer(GL_NONE);
-
-		// Tell OpenGL which texture unit each sampler belongs to (I should learn how to put everything into one texture. For next time maybe..)
-		GLint location_sampler = shader->getUniformFromName(fmt::format("depthMap[{}]", light));
-		glUniform1i(location_sampler, light);
-	}
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 }

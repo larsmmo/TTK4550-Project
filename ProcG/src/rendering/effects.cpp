@@ -13,12 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Renderer::Renderer()
-{
-
-}
-
-void Renderer::renderEffects()
+void Renderer::renderShadows()
 {
 
 }
@@ -56,11 +51,11 @@ void Renderer::renderNode(SceneNode* node)
 	}
 }
 
-void Renderer::renderScene(SceneNode* scene)
+void Renderer::renderFrame(GLFWwindow* window)
 {
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(window, &windowWidth, &windowHeight);
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	renderNode(scene);
+	renderNode();
 }

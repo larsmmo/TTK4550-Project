@@ -1,5 +1,5 @@
-#include "engine.hpp"
-#include "shader.hpp"
+#include "application.hpp"
+#include "rendering/shader.hpp"
 #include "shapes.h"
 #include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
@@ -11,9 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Engine* Engine::engineInstance = NULL;
-
-Engine::Engine(GLFWwindow* window)
+Application::Application()
 {
 	// Enable depth buffer
 	glEnable(GL_DEPTH_TEST);
