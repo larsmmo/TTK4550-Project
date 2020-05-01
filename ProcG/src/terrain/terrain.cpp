@@ -1,7 +1,6 @@
 
 #include "sceneGraph.hpp"
 #include "shapes.h"
-#include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
 
 #include <glad/glad.h>

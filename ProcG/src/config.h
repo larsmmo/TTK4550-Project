@@ -7,6 +7,7 @@
 #include <string>
 
 struct Config {
+	const std::string	graphicsAPI = "OpenGL";
 	const int			windowWidth = 1280;
 	const int			windowHeight = 720;
 	const std::string	windowTitle = "OpenGL Window";

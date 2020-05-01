@@ -6,6 +6,7 @@
 #include "camera.hpp"
 #include "shader.hpp"
 #include "context.hpp"
+#include "config.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -13,11 +14,12 @@
 class Renderer
 {
 private:
-	Context mRenderContext;
+	Context* mRenderContext;
 	//void renderEffects();
 
 public:
-	Renderer();
+	Renderer(const Config& cfg);
+	void draw();
 	void renderNode(SceneNode* node);
 	void renderScene(SceneNode* scene);
 	bool isContextOpen();

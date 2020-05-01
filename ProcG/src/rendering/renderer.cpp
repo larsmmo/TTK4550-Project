@@ -1,9 +1,7 @@
 #include "renderer.hpp"
-#include "engine.hpp"
 #include "sceneGraph.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
-#include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
 
 #include <glad/glad.h>
@@ -13,15 +11,30 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Renderer::Renderer()
+Renderer::Renderer(const Config& cfg)
 {
-
+	mRenderContext = Context::create(cfg);
 }
 
-void Renderer::renderEffects()
+void Renderer::draw()
 {
+	while (!glfwWindowShouldClose(window))
+	{
+		// Clear colour and depth buffers
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// Update and render a frame
+		updateFrame(window);
+		renderFrame(window);
+
+		glfwSwapBuffers(window);
+
+		// Check if any events have been triggered (mouse, keyboard...)
+		glfwPollEvents();
+		processKeyboardInput(window);
+	}
 }
+
 
 void Renderer::renderNode(SceneNode* node)
 {

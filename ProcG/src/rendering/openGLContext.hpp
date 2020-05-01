@@ -3,20 +3,23 @@
 #pragma once
 
 #include "config.h"
+#include "context.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// (Builder pattern)
-
-template <class T>
-class openGLContext : Context
+class OpenGLContext : public Context
 {
+private:
+	static GLFWwindow* window;
+
 public:
-	openGLContext(const Config& config);
-	virtual unsigned int getWindowHeight();
-	virtual unsigned int getWindowWidth();
+	OpenGLContext(const Config& cfg);
+	~OpenGLContext();
+	unsigned int getWindowHeight();
+	unsigned int getWindowWidth();
 	bool isOpen();
+	void processKeyboardInput(GLFWwindow* window);
 };
 
 

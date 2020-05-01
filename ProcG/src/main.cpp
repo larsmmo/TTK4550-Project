@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 
 // Local headers
-#include "utilities/windowSettings.h"
-#include "rendering/application.hpp"
+#include "config.h"
+#include "application.hpp"
 
 // Standard headers
 #include <cstdlib>

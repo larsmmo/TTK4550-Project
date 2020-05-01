@@ -7,21 +7,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// (Builder pattern)
+// (Factory pattern)
 
-template <class T>
 class Context
 {
-private:
-	T* window;
-
 protected:
 
 public:
-	Context(const Config& config);
-	virtual unsigned int getWindowHeight() {};
-	virtual unsigned int getWindowWidth() {};
-	bool isOpen();
+	static Context* create(const Config& cfg);
+	virtual unsigned int getWindowHeight() = 0;
+	virtual unsigned int getWindowWidth() = 0;
+	virtual bool isOpen() = 0;
+
+	virtual void processKeyboardInput(GLFWwindow* window) = 0;
 };
 
 

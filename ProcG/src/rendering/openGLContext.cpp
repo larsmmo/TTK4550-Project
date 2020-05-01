@@ -1,11 +1,18 @@
 
 #include "context.hpp"
+#include "OpenGLContext.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 
-openGLContext::openGLContext(const Config& config)
+// Callback function for letting GLFW report errors as they occur
+static void glfwErrorCallback(int err, const char* description)
+{
+	fprintf(stderr, "GLFW error: \n \t%s (%i)\n", description, err);
+}
+
+OpenGLContext::OpenGLContext(const Config& cfg)
 {
 	// Initializing GLFW
 	if (!glfwInit())
@@ -20,13 +27,13 @@ openGLContext::openGLContext(const Config& config)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Enable Multisample anti-aliasing
-	glfwWindowHint(GLFW_SAMPLES, windowSamples);
+	glfwWindowHint(GLFW_SAMPLES, cfg.windowSamples);
 
 	glfwSetErrorCallback(glfwErrorCallback);
 
-	GLFWwindow* window = glfwCreateWindow(windowWidth,
-		windowHeight,
-		windowTitle.c_str(),
+	GLFWwindow* window = glfwCreateWindow(cfg.windowWidth,
+		cfg.windowHeight,
+		cfg.windowTitle.c_str(),
 		nullptr,
 		nullptr);
 	if (!window)
@@ -42,7 +49,17 @@ openGLContext::openGLContext(const Config& config)
 	// Initialize GLAD
 	gladLoadGL();
 
-	glViewport(0, 0, windowWidth, windowHeight);
+	glViewport(0, 0, cfg.windowWidth, cfg.windowHeight);
+
+	// Enable depth buffer
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	// Enable face culling
+	glEnable(GL_CULL_FACE);
+
+	// Clear color buffer and set default color
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Show info about OpenGL
 	printf("%s: %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
@@ -51,3 +68,16 @@ openGLContext::openGLContext(const Config& config)
 	printf("GLSL version\t %s\n\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
+OpenGLContext::~OpenGLContext()
+{
+	// Delete all of GLFW's allocated resources
+	glfwTerminate();
+}
+
+void OpenGLContext::processKeyboardInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+}

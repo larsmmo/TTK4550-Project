@@ -5,8 +5,6 @@
 // Local headers
 #include "scene.hpp"
 #include "rendering/shader.hpp"
-#include "utilities/windowSettings.h"
-#include "rendering/engine.hpp"
 #include "sceneGraph.hpp"
 #include "mesh.h"
 #include "shapes.h"
@@ -61,7 +59,7 @@ Scene::Scene()
 	glUniform1i(6, activeLights);
 
 	// Set up cubemap and frame buffer for shadow mapping
-	glGenFramebuffers(1, &depthMapFrameBuffer);
+	//glGenFramebuffers(1, &depthMapFrameBuffer);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
