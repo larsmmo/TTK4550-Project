@@ -31,14 +31,18 @@ OpenGLContext::OpenGLContext(const Config& cfg)
 
 	glfwSetErrorCallback(glfwErrorCallback);
 
-	GLFWwindow* window = glfwCreateWindow(cfg.windowWidth,
-		cfg.windowHeight,
+	//Create window
+	mWindowWidth = cfg.windowWidth;
+	mWindowHeight = cfg.windowHeight;
+
+	GLFWwindow* window = glfwCreateWindow(mWindowWidth,
+		mWindowHeight,
 		cfg.windowTitle.c_str(),
 		nullptr,
 		nullptr);
 	if (!window)
 	{
-		fprintf(stderr, "Failed to create GLFW window\n");
+		fprintf(stderr, "ERROR: Failed to create GLFW window\n");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
@@ -68,16 +72,51 @@ OpenGLContext::OpenGLContext(const Config& cfg)
 	printf("GLSL version\t %s\n\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
+void OpenGLContext::setViewport(int setWindowWidth, int setWindowHeight)
+{
+	glViewport(0, 0, setWindowWidth, setWindowHeight);
+}
+
+unsigned int OpenGLContext::getWindowHeight()
+{
+	glfwGetWindowSize(mWindow, &mWindowWidth, &mWindowHeight);
+	return mWindowHeight;
+}
+
+unsigned int OpenGLContext::getWindowWidth()
+{
+	return mWindowWidth;
+}
+
 OpenGLContext::~OpenGLContext()
 {
 	// Delete all of GLFW's allocated resources
 	glfwTerminate();
 }
 
-void OpenGLContext::processKeyboardInput(GLFWwindow* window)
+void OpenGLContext::processKeyboardInput()
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
+}
+
+// GLFW window callback functions for handling mouse position input
+void mouseCallback(GLFWwindow* window, double x, double y)
+{
+	camera.handleCursorPosInput(x, y);
+	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
+}
+
+// GLFW window callback functions for handling mouse button input
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	camera.handleMouseButtonInputs(button, action);
+}
+
+// GLFW window callback functions for handling keyboard button input
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	camera.handleKeyboardInputs(key, action);
 }

@@ -2,6 +2,7 @@
 #include "sceneGraph.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
+#include "sceneGraph.hpp"
 #include "utilities/timeUtilities.h"
 
 #include <glad/glad.h>
@@ -15,6 +16,24 @@ Renderer::Renderer(const Config& cfg)
 {
 	mRenderContext = Context::create(cfg);
 }
+
+void Renderer::updateFrame()
+{
+
+}
+
+/* Renders a scene from objects in a Scene Graph */
+void Renderer::renderScene(SceneNode* rootNode)
+{
+	int windowWidth = mRenderContext->getWindowWidth();
+	int windowHeight = mRenderContext->getWindowHeight();
+	mRenderContext->setViewport(windowWidth, windowHeight);
+
+	renderNode(rootNode);
+}
+
+
+
 
 void Renderer::draw()
 {
@@ -67,13 +86,4 @@ void Renderer::renderNode(SceneNode* node)
 	for (SceneNode* child : node->children) {
 		renderNode(child);
 	}
-}
-
-void Renderer::renderScene(SceneNode* scene)
-{
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(window, &windowWidth, &windowHeight);
-	glViewport(0, 0, windowWidth, windowHeight);
-
-	renderNode(scene);
 }

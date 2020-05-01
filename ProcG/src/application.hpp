@@ -12,7 +12,7 @@
 class Application
 {
 private:
-	Renderer mRenderer;
+	Renderer* mRenderer;
 
 public:
 	Application(const Config& cfg);

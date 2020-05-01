@@ -11,15 +11,18 @@
 class OpenGLContext : public Context
 {
 private:
-	static GLFWwindow* window;
+	static GLFWwindow* mWindow;
+	int mWindowHeight;
+	int mWindowWidth;
 
 public:
 	OpenGLContext(const Config& cfg);
 	~OpenGLContext();
 	unsigned int getWindowHeight();
 	unsigned int getWindowWidth();
+	void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 	bool isOpen();
-	void processKeyboardInput(GLFWwindow* window);
+	void processKeyboardInput();
 };
 
 

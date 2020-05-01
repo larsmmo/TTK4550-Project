@@ -20,8 +20,9 @@ private:
 public:
 	Renderer(const Config& cfg);
 	void draw();
+	void renderScene(SceneNode* rootNode);
+	void updateFrame();
 	void renderNode(SceneNode* node);
-	void renderScene(SceneNode* scene);
 	bool isContextOpen();
 };
 

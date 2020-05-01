@@ -42,7 +42,7 @@ GLFWwindow* window_init()
 										  nullptr);
 	if (!window) 
 	{
-		fprintf(stderr,"Failed to create GLFW window\n");
+		fprintf(stderr,"ERROR: Failed to create GLFW window\n");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}

@@ -18,8 +18,9 @@ public:
 	virtual unsigned int getWindowHeight() = 0;
 	virtual unsigned int getWindowWidth() = 0;
 	virtual bool isOpen() = 0;
+	virtual void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 
-	virtual void processKeyboardInput(GLFWwindow* window) = 0;
+	virtual void processKeyboardInput() = 0;
 };
 
 
