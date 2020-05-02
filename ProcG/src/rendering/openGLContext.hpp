@@ -20,7 +20,7 @@ public:
 	~OpenGLContext();
 	unsigned int getWindowHeight();
 	unsigned int getWindowWidth();
-	void setViewport(int setWindowWidth, int setWindowHeight) = 0;
+	void setViewport(int setWindowWidth, int setWindowHeight);
 	bool isOpen();
 	void processKeyboardInput();
 };

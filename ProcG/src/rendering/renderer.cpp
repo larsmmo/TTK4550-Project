@@ -22,6 +22,12 @@ void Renderer::updateFrame()
 
 }
 
+void Renderer::renderNode(SceneNode* rootNode)
+{
+
+}
+
+
 /* Renders a scene from objects in a Scene Graph */
 void Renderer::renderScene(SceneNode* rootNode)
 {

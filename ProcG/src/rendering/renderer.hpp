@@ -15,7 +15,6 @@ class Renderer
 {
 private:
 	Context* mRenderContext;
-	//void renderEffects();
 
 public:
 	Renderer(const Config& cfg);

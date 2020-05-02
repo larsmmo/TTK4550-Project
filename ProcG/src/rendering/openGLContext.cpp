@@ -77,14 +77,17 @@ void OpenGLContext::setViewport(int setWindowWidth, int setWindowHeight)
 	glViewport(0, 0, setWindowWidth, setWindowHeight);
 }
 
+/* Updates and returns the height of the window*/
 unsigned int OpenGLContext::getWindowHeight()
 {
 	glfwGetWindowSize(mWindow, &mWindowWidth, &mWindowHeight);
 	return mWindowHeight;
 }
 
+/* Updates and returns the width of the window*/
 unsigned int OpenGLContext::getWindowWidth()
 {
+	glfwGetWindowSize(mWindow, &mWindowWidth, &mWindowHeight);
 	return mWindowWidth;
 }
 
@@ -98,9 +101,11 @@ void OpenGLContext::processKeyboardInput()
 {
 	if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		glfwSetWindowShouldClose(window, GL_TRUE);
+		glfwSetWindowShouldClose(mWindow, GL_TRUE);
 	}
 }
+
+
 
 // GLFW window callback functions for handling mouse position input
 void mouseCallback(GLFWwindow* window, double x, double y)

@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <glm/vec3.hpp>
 
 #include <stack>
 #include <vector>
@@ -12,6 +12,8 @@
 #include <ctime> 
 #include <chrono>
 #include <fstream>
+
+
 
 enum SceneNodeType {
 	GEOMETRY, POINT_LIGHT, SPOT_LIGHT
@@ -30,12 +32,9 @@ struct SceneNode {
         nodeType = GEOMETRY;
 
 	}
-
-	// A list of all children that belong to this node.
-	// For instance, in case of the scene graph of a human body shown in the assignment text, the "Upper Torso" node would contain the "Left Arm", "Right Arm", "Head" and "Lower Torso" nodes in its list of children.
 	std::vector<SceneNode*> children;
 	
-	// The node's position and rotation relative to its parent
+	// A node's position and rotation relative to its parent
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
@@ -56,12 +55,8 @@ struct SceneNode {
 	SceneNodeType nodeType;
 };
 
-struct GeometryNode : public SceneNode
-{
-
-};
-
 SceneNode* createSceneNode();
 void addChild(SceneNode* parent, SceneNode* child);
 void printNode(SceneNode* node);
 int totalChildren(SceneNode* parent);
+void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThusFar, glm::mat4 viewProjection);
