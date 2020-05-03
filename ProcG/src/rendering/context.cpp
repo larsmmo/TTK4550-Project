@@ -10,6 +10,7 @@ Context* Context::create(const Config& cfg)
 	if (cfg.graphicsAPI == "OpenGL")
 	{
 		return new OpenGLContext(cfg);
+		// TODO: also create window here?
 	}
 	else
 	{

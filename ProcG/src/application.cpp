@@ -12,9 +12,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Application::Application(const Config& cfg)
+Application::Application()
 {
-	mRenderer = Renderer(cfg);
+	mRenderer = Renderer();
 
 }
 

@@ -12,20 +12,20 @@ static void glfwErrorCallback(int err, const char* description)
 	fprintf(stderr, "GLFW error: \n \t%s (%i)\n", description, err);
 }
 
-// GLFW window callback functions for handling mouse position input
+// GLFW window callback function for handling mouse position input			// Move these to window class
 void mouseCallback(GLFWwindow* window, double x, double y)
 {
 	camera.handleCursorPosInput(x, y);
 	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
 }
 
-// GLFW window callback functions for handling mouse button input
+// GLFW window callback function for handling mouse button input
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
 	camera.handleMouseButtonInputs(button, action);
 }
 
-// GLFW window callback functions for handling keyboard button input
+// GLFW window callback function for handling keyboard button input
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	camera.handleKeyboardInputs(key, action);
@@ -102,6 +102,23 @@ void OpenGLContext::setViewport(int setWindowWidth, int setWindowHeight)
 {
 	glViewport(0, 0, setWindowWidth, setWindowHeight);
 }
+
+void OpenGLContext::clearBuffers()
+{
+	// Clear colour and depth buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void OpenGLContext::swapDrawBuffers()		// TODO: make window factory or something similar.
+{
+	glfwSwapBuffers(mWindow);
+}
+
+void OpenGLContext::pollEvents()
+{
+	glfwPollEvents();
+}
+
 
 /* Updates and returns the height of the window*/
 unsigned int OpenGLContext::getWindowHeight()

@@ -17,7 +17,7 @@ private:
 	Context* mRenderContext;
 
 public:
-	Renderer(const Config& cfg);
+	Renderer();
 	void draw();
 	void renderScene(SceneNode* rootNode);
 	void updateFrame();

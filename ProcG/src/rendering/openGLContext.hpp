@@ -21,6 +21,9 @@ public:
 	unsigned int getWindowHeight();
 	unsigned int getWindowWidth();
 	void setViewport(int setWindowWidth, int setWindowHeight);
+	void clearBuffers();
+	void swapDrawBuffers();
+	void pollEvents();
 	void processKeyboardInput();
 	bool shouldClose();
 };

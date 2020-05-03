@@ -21,6 +21,7 @@ int main(int argc, char* argb[])
 {
 	Config cfg;
 
+	Application app = Application(cfg);
 
 
 	return EXIT_SUCCESS;

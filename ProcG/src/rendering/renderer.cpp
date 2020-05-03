@@ -12,8 +12,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Renderer::Renderer(const Config& cfg)
+Renderer::Renderer()
 {
+	Config cfg;					// TODO: ass proper config file system
 	mRenderContext = Context::create(cfg);
 }
 
@@ -39,24 +40,21 @@ void Renderer::renderScene(SceneNode* rootNode)
 }
 
 
-
-
-void Renderer::draw()
+void Renderer::draw()			// TODO: change to per-node drawing
 {
 	while (!mRenderContext->shouldClose())
 	{
 		// Clear colour and depth buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		mRenderContext->clearBuffers();
 
 		// Update and render a frame
-		updateFrame(window);
-		renderFrame(window);
+		updateFrame();
+		renderFrame();
 
-		glfwSwapBuffers(window);
+		mRenderContext->swapDrawBuffers();
 
 		// Check if any events have been triggered (mouse, keyboard...)
-		glfwPollEvents();
-		processKeyboardInput(window);
+		mRenderContext->pollEvents();
 	}
 }
 
