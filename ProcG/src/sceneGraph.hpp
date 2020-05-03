@@ -39,12 +39,11 @@ struct SceneNode {
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
-	// A transformation matrix representing the transformation of the node's location relative to its parent. This matrix is updated every frame.
+	// A transformation matrix representing the transformation of the node's location relative to its parent.
 	glm::mat4 currentTransformationMatrix;
 
 	glm::mat4 MVPMatrix;
 
-	// The location of the node's reference point
 	glm::vec3 referencePoint;
 
 	// The ID of the VAO containing the "appearance" of this SceneNode.

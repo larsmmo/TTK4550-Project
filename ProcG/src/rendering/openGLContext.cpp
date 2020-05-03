@@ -12,6 +12,25 @@ static void glfwErrorCallback(int err, const char* description)
 	fprintf(stderr, "GLFW error: \n \t%s (%i)\n", description, err);
 }
 
+// GLFW window callback functions for handling mouse position input
+void mouseCallback(GLFWwindow* window, double x, double y)
+{
+	camera.handleCursorPosInput(x, y);
+	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
+}
+
+// GLFW window callback functions for handling mouse button input
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	camera.handleMouseButtonInputs(button, action);
+}
+
+// GLFW window callback functions for handling keyboard button input
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	camera.handleKeyboardInputs(key, action);
+}
+
 OpenGLContext::OpenGLContext(const Config& cfg)
 {
 	// Initializing GLFW
@@ -72,6 +91,13 @@ OpenGLContext::OpenGLContext(const Config& cfg)
 	printf("GLSL version\t %s\n\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
+OpenGLContext::~OpenGLContext()
+{
+	// Delete all of GLFW's allocated resources
+	glfwTerminate();
+}
+
+
 void OpenGLContext::setViewport(int setWindowWidth, int setWindowHeight)
 {
 	glViewport(0, 0, setWindowWidth, setWindowHeight);
@@ -91,12 +117,6 @@ unsigned int OpenGLContext::getWindowWidth()
 	return mWindowWidth;
 }
 
-OpenGLContext::~OpenGLContext()
-{
-	// Delete all of GLFW's allocated resources
-	glfwTerminate();
-}
-
 void OpenGLContext::processKeyboardInput()
 {
 	if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -105,23 +125,7 @@ void OpenGLContext::processKeyboardInput()
 	}
 }
 
-
-
-// GLFW window callback functions for handling mouse position input
-void mouseCallback(GLFWwindow* window, double x, double y)
+bool OpenGLContext::shouldClose()
 {
-	camera.handleCursorPosInput(x, y);
-	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
-}
-
-// GLFW window callback functions for handling mouse button input
-void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-{
-	camera.handleMouseButtonInputs(button, action);
-}
-
-// GLFW window callback functions for handling keyboard button input
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
-	camera.handleKeyboardInputs(key, action);
+	return glfwWindowShouldClose(mWindow);
 }

@@ -22,7 +22,6 @@ public:
 	void renderScene(SceneNode* rootNode);
 	void updateFrame();
 	void renderNode(SceneNode* node);
-	bool isContextOpen();
 };
 
 

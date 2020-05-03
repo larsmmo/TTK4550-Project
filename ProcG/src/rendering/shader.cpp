@@ -5,14 +5,14 @@ GLuint createShaderObject(std::string const& filename)
 {
 	// Create shader type by looking at file extension
 	auto idx = filename.rfind(".");
-	auto ext = filename.substr(idx + 1);
-	if (ext == "comp") return glCreateShader(GL_COMPUTE_SHADER);
-	else if (ext == "frag") return glCreateShader(GL_FRAGMENT_SHADER);
-	else if (ext == "geom") return glCreateShader(GL_GEOMETRY_SHADER);
-	else if (ext == "tes")  return glCreateShader(GL_TESS_EVALUATION_SHADER);
-	else if (ext == "vert") return glCreateShader(GL_VERTEX_SHADER);
-	else if (ext == "tcs")  return glCreateShader(GL_TESS_CONTROL_SHADER);
-	else                    return false;
+	auto extension = filename.substr(idx + 1);
+	if (extension == "comp") return glCreateShader(GL_COMPUTE_SHADER);
+	else if (extension == "frag") return glCreateShader(GL_FRAGMENT_SHADER);
+	else if (extension == "geom") return glCreateShader(GL_GEOMETRY_SHADER);
+	else if (extension == "tes")  return glCreateShader(GL_TESS_EVALUATION_SHADER);
+	else if (extension == "vert") return glCreateShader(GL_VERTEX_SHADER);
+	else if (extension == "tcs")  return glCreateShader(GL_TESS_CONTROL_SHADER);
+	else						  return false;
 }
 
 void ProcG::Shader::attach(std::string const& filename)

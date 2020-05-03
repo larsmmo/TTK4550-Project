@@ -43,7 +43,7 @@ void Renderer::renderScene(SceneNode* rootNode)
 
 void Renderer::draw()
 {
-	while (!glfwWindowShouldClose(window))
+	while (!mRenderContext->shouldClose())
 	{
 		// Clear colour and depth buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -93,3 +93,4 @@ void Renderer::renderNode(SceneNode* node)
 		renderNode(child);
 	}
 }
+

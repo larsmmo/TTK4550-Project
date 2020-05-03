@@ -21,6 +21,7 @@ public:
 	virtual void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 
 	virtual void processKeyboardInput() = 0;
+	virtual bool shouldClose() = 0;
 };
 
 
