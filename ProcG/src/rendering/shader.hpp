@@ -20,8 +20,8 @@ namespace ProcG
 		Shader& operator = (Shader const&) = delete;
 
 		GLuint mShaderProgram;
-		GLint  mLength;
 		GLint  mStatus;
+		GLint  mLength;
 
 	public:
 		Shader() { mShaderProgram = glCreateProgram(); }
@@ -30,7 +30,6 @@ namespace ProcG
 		void   deactivate() { glUseProgram(0); }
 		GLuint get() { return mShaderProgram; }
 		void   destroy() { glDeleteProgram(mShaderProgram); }
-
 
 		/* Attaches a shader to the program */
 		void attach(std::string const& filename);
@@ -45,6 +44,9 @@ namespace ProcG
 
 		/* Gets a uniform ID from a string of the uniform name */
 		GLint getUniformFromName(std::string const& uniformName);
+		void setUniform1fv(std::string const& uniformName, int count, const float* value);
+		void setUniform2fv(std::string const& uniformName, int count, const float* value);
+		void setUniform3fv(std::string const& uniformName, int count, const float* value);
 
 		/* Helps with debugging the shader program*/
 		bool isValidProgram();

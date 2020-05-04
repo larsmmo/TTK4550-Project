@@ -84,6 +84,21 @@ GLint ProcG::Shader::getUniformFromName(std::string const& uniformName)
 	return glGetUniformLocation(this->get(), uniformName.c_str());
 }
 
+void ProcG::Shader::setUniform1fv(std::string const& uniformName, int count, const float* value)
+{
+	glUniform1fv(getUniformFromName(uniformName), count, value);
+}
+
+void ProcG::Shader::setUniform2fv(std::string const& uniformName, int count, const float* value)
+{
+	glUniform2fv(getUniformFromName(uniformName), count, value);
+}
+
+void ProcG::Shader::setUniform3fv(std::string const& uniformName, int count, const float* value)
+{
+	glUniform3fv(getUniformFromName(uniformName), count, value);
+}
+
 bool ProcG::Shader::isValidProgram()
 {
 	// Validate linked shader program
