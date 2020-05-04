@@ -13,9 +13,6 @@ class Effects
 {
 private:
 	ProcG::Camera* camera;
-	ProcG::Shader* shader;
-
-	void renderShadows();
 
 public:
 	void renderShadows();

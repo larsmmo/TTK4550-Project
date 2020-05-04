@@ -19,9 +19,7 @@ static void glfwErrorCallback(int err, const char* description)
 
 int main(int argc, char* argb[])
 {
-	Config cfg;
-
-	Application app = Application(cfg);
+	Application app = Application();
 
 
 	return EXIT_SUCCESS;

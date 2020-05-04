@@ -33,7 +33,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
 OpenGLContext::OpenGLContext(const Config& cfg)
 {
-	// Initializing GLFW
+	// Initializing GLFW			// TODO: move to window class
 	if (!glfwInit())
 	{
 		fprintf(stderr, "Error: GLFW did not start\n");

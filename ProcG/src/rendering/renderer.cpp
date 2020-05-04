@@ -23,14 +23,9 @@ void Renderer::updateFrame()
 
 }
 
-void Renderer::renderNode(SceneNode* rootNode)
-{
-
-}
-
 
 /* Renders a scene from objects in a Scene Graph */
-void Renderer::renderScene(SceneNode* rootNode)
+void Renderer::renderFrame(SceneNode* rootNode)
 {
 	int windowWidth = mRenderContext->getWindowWidth();
 	int windowHeight = mRenderContext->getWindowHeight();
@@ -40,7 +35,7 @@ void Renderer::renderScene(SceneNode* rootNode)
 }
 
 
-void Renderer::draw()			// TODO: change to per-node drawing
+bool Renderer::draw()			// TODO: change to per-node drawing
 {
 	while (!mRenderContext->shouldClose())
 	{
@@ -53,9 +48,11 @@ void Renderer::draw()			// TODO: change to per-node drawing
 
 		mRenderContext->swapDrawBuffers();
 
-		// Check if any events have been triggered (mouse, keyboard...)
+		// Check if window has captured any events happening
 		mRenderContext->pollEvents();
 	}
+
+	return true;
 }
 
 

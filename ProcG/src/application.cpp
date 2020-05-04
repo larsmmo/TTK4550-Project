@@ -15,6 +15,10 @@
 Application::Application()
 {
 	mRenderer = Renderer();
+}
 
+void Application::runApplication()
+{
+	while (mRenderer.draw()) {};		// temporary draw loop
 }
 

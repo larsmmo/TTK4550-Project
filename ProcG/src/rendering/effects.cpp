@@ -1,9 +1,7 @@
 #include "renderer.hpp"
-#include "engine.hpp"
 #include "sceneGraph.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
-#include "utilities/windowSettings.h"
 #include "utilities/timeUtilities.h"
 
 #include <glad/glad.h>
@@ -13,10 +11,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void Renderer::renderShadows()
-{
-
-}
 
 void Renderer::renderNode(SceneNode* node)
 {
@@ -49,13 +43,4 @@ void Renderer::renderNode(SceneNode* node)
 	for (SceneNode* child : node->children) {
 		renderNode(child);
 	}
-}
-
-void Renderer::renderFrame(GLFWwindow* window)
-{
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(window, &windowWidth, &windowHeight);
-	glViewport(0, 0, windowWidth, windowHeight);
-
-	renderNode();
 }

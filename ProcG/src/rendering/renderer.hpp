@@ -18,9 +18,10 @@ private:
 
 public:
 	Renderer();
-	void draw();
+	bool draw();
 	void renderScene(SceneNode* rootNode);
 	void updateFrame();
+	void renderFrame(SceneNode* rootNode);
 	void renderNode(SceneNode* node);
 };
 
