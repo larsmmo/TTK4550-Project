@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "context.hpp"
+#include "window.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -11,19 +12,15 @@
 class OpenGLContext : public Context
 {
 private:
-	static GLFWwindow* mWindow;
-	int mWindowHeight;
-	int mWindowWidth;
 
 public:
-	OpenGLContext(const Config& cfg);
+	OpenGLContext(Window* window);
+
 	~OpenGLContext();
-	unsigned int getWindowHeight();
-	unsigned int getWindowWidth();
-	void setViewport(int setWindowWidth, int setWindowHeight);
+
+	void setViewport(int width, int height);
+
 	void clearBuffers();
-	void processKeyboardInput();
-	bool shouldClose();
 };
 
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "config.h"
+#include "window.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,15 +15,9 @@ class Context
 protected:
 
 public:
-	static Context* create(const Config& cfg);
-	virtual unsigned int getWindowHeight() = 0;
-	virtual unsigned int getWindowWidth() = 0;
+	static Context* create(Window* window, const Config& cfg);
 	virtual void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 	virtual void clearBuffers() = 0;
-	virtual void swapDrawBuffers() = 0;
-	virtual void pollEvents() = 0;
-	virtual void processKeyboardInput() = 0;
-	virtual bool shouldClose() = 0;
 };
 
 

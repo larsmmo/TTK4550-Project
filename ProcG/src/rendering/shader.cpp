@@ -84,20 +84,31 @@ GLint ProcG::Shader::getUniformFromName(std::string const& uniformName)
 	return glGetUniformLocation(this->get(), uniformName.c_str());
 }
 
-void ProcG::Shader::setUniform1fv(std::string const& uniformName, int count, const float* value)
+void ProcG::Shader::setUniform1fv(std::string const& uniformName, const float* value)
 {
-	glUniform1fv(getUniformFromName(uniformName), count, value);
+	glUniform1fv(getUniformFromName(uniformName), 1, value);
 }
 
-void ProcG::Shader::setUniform2fv(std::string const& uniformName, int count, const float* value)
+void ProcG::Shader::setUniform2fv(std::string const& uniformName, const float* value)
 {
-	glUniform2fv(getUniformFromName(uniformName), count, value);
+	glUniform2fv(getUniformFromName(uniformName), 1, value);
 }
 
-void ProcG::Shader::setUniform3fv(std::string const& uniformName, int count, const float* value)
+void ProcG::Shader::setUniform3fv(std::string const& uniformName, const float* value)
 {
-	glUniform3fv(getUniformFromName(uniformName), count, value);
+	glUniform3fv(getUniformFromName(uniformName), 1, value);
 }
+
+void ProcG::Shader::setUniformMatrix3fv(std::string const& uniformName, bool transpose, const float* value)
+{
+	glUniformMatrix3fv(getUniformFromName(uniformName), 1, transpose, value);
+}
+
+void ProcG::Shader::setUniformMatrix4fv(std::string const& uniformName, bool transpose, const float* value)
+{
+	glUniformMatrix4fv(getUniformFromName(uniformName), 1, transpose, value);
+}
+
 
 bool ProcG::Shader::isValidProgram()
 {

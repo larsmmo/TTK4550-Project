@@ -44,9 +44,13 @@ namespace ProcG
 
 		/* Gets a uniform ID from a string of the uniform name */
 		GLint getUniformFromName(std::string const& uniformName);
-		void setUniform1fv(std::string const& uniformName, int count, const float* value);
-		void setUniform2fv(std::string const& uniformName, int count, const float* value);
-		void setUniform3fv(std::string const& uniformName, int count, const float* value);
+
+		/* Functions for setting uniform variables in shader */
+		void setUniform1fv(std::string const& uniformName, const float* value);
+		void setUniform2fv(std::string const& uniformName, const float* value);
+		void setUniform3fv(std::string const& uniformName, const float* value);
+		void setUniformMatrix3fv(std::string const& uniformName, bool transpose, const float* value);
+		void setUniformMatrix4fv(std::string const& uniformName, bool transpose, const float* value);
 
 		/* Helps with debugging the shader program*/
 		bool isValidProgram();

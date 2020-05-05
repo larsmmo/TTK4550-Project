@@ -6,12 +6,11 @@
 #include <GLFW/glfw3.h>
 
 
-Context* Context::create(const Config& cfg)
+Context* Context::create(Window* window, const Config& cfg)
 {
 	if (cfg.graphicsAPI == "OpenGL")
 	{
-
-		return new OpenGLContext(cfg);
+		return new OpenGLContext(window);
 		// TODO: also create window here?
 	}
 	else

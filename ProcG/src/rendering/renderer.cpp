@@ -1,4 +1,5 @@
 #include "renderer.hpp"
+#include "window.hpp"
 #include "sceneGraph.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
@@ -14,11 +15,12 @@
 
 Renderer::Renderer()
 {
-	Config cfg;					// TODO: ass proper config file system
-	mRenderContext = Context::create(cfg);
+	Config cfg;					// TODO: add proper config file system
+	mWindow = Window::create(cfg);
+	mRenderContext = Context::create(mWindow, cfg);
 }
 
-void Renderer::updateFrame()
+void Renderer::updateFrame(SceneNode* rootNode)
 {
 
 }
@@ -27,29 +29,29 @@ void Renderer::updateFrame()
 /* Renders a scene from objects in a Scene Graph */
 void Renderer::renderFrame(SceneNode* rootNode)
 {
-	int windowWidth = mRenderContext->getWindowWidth();
-	int windowHeight = mRenderContext->getWindowHeight();
+	int windowWidth = mWindow->getWindowWidth();
+	int windowHeight = mWindow->getWindowHeight();
 	mRenderContext->setViewport(windowWidth, windowHeight);
 
 	renderNode(rootNode);
 }
 
 
-bool Renderer::draw()			// TODO: change to per-node drawing
+bool Renderer::draw(SceneNode* rootNode)			// TODO: change to per-node drawing
 {
-	while (!mRenderContext->shouldClose())
+	while (!mWindow->shouldClose())
 	{
 		// Clear colour and depth buffers
 		mRenderContext->clearBuffers();
 
 		// Update and render a frame
-		updateFrame();
-		renderFrame();
+		updateFrame(rootNode);
+		renderFrame(rootNode);
 
-		mRenderContext->swapDrawBuffers();
+		mWindow->swapDrawBuffers();
 
 		// Check if window has captured any events happening
-		mRenderContext->pollEvents();
+		mWindow->pollEvents();
 	}
 
 	return true;
