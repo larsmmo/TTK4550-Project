@@ -4,6 +4,7 @@
 
 #include <glad/glad.h>
 
+#include <vector>
 #include <memory>
 #include <fstream>
 #include <string>
@@ -38,9 +39,7 @@ namespace ProcG
 		void link();
 
 		/* Attaches and links shaders into the shader program */
-		void makeBasicShader(std::string const& vertexFilename,
-			std::string const& fragmentFilename,
-			std::string const& geometryFilename);
+		void makeBasicShader(std::vector<std::string> const shaders);
 
 		/* Gets a uniform ID from a string of the uniform name */
 		GLint getUniformFromName(std::string const& uniformName);

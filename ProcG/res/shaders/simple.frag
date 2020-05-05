@@ -1,6 +1,6 @@
 #version 430 core
 
-in GS_OUT {
+in VS_OUT {
 	vec3 normal;
 	vec2 textureCoordinates;
 	vec3 fragPos;

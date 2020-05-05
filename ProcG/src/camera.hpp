@@ -15,23 +15,23 @@ namespace ProcG
 	class Camera
 	{
 	public:
-		Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 2.0f),
+		Camera(glm::vec3 position = glm::vec3(0.0f, 1.0f, 0.0f),
 			GLfloat   movementSpeed = 5.0f,
 			GLfloat   mouseSensitivity = 0.005f)
 		{
-			cPosition = position;
-			cMovementSpeed = movementSpeed;
-			cMouseSensitivity = mouseSensitivity;
+			mPosition = position;
+			mMovementSpeed = movementSpeed;
+			mMouseSensitivity = mouseSensitivity;
 
 			// Set up the initial view matrix
 			updateViewMatrix();
 		}
 
 		/* Getter for camera position */
-		glm::vec3 getPosition() { return cPosition; }
+		glm::vec3 getPosition() { return mPosition; }
 
 		/* Getter for camera rotation */
-		glm::mat4 getRotation() { return glm::mat4_cast(inverse(cQuaternion)); }
+		glm::mat4 getRotation() { return glm::mat4_cast(inverse(mQuaternion)); }
 
 		/* Getter for the view matrix */
 		glm::mat4 getViewMatrix() { return matView; }
@@ -127,10 +127,10 @@ namespace ProcG
 				fMovement -= dirY;
 
 			// Trick to balance PC speed with movement
-			GLfloat velocity = cMovementSpeed * deltaTime;
+			GLfloat velocity = mMovementSpeed * deltaTime;
 
 			// Update camera position using the appropriate velocity
-			cPosition += fMovement * velocity;
+			mPosition += fMovement * velocity;
 
 			// Update the view matrix based on the new information
 			updateViewMatrix();
@@ -145,8 +145,8 @@ namespace ProcG
 		void updateViewMatrix()
 		{
 			// Adjust cursor movement using the specified sensitivity
-			fPitch *= cMouseSensitivity;
-			fYaw *= cMouseSensitivity;
+			fPitch *= mMouseSensitivity;
+			fYaw *= mMouseSensitivity;
 
 			// Create quaternions given the current pitch and yaw
 			glm::quat qPitch = glm::quat(glm::vec3(fPitch, 0.0f, 0.0f));
@@ -157,14 +157,14 @@ namespace ProcG
 			fYaw = 0.0f;
 
 			// Update camera quaternion and normalise
-			cQuaternion = qYaw * cQuaternion * qPitch;
-			cQuaternion = glm::normalize(cQuaternion);
+			mQuaternion = qYaw * mQuaternion * qPitch;
+			mQuaternion = glm::normalize(mQuaternion);
 
 			// Build rotation matrix using the camera quaternion
-			glm::mat4 matRotation = glm::mat4_cast(inverse(cQuaternion));
+			glm::mat4 matRotation = glm::mat4_cast(inverse(mQuaternion));
 
 			// Build translation matrix
-			glm::mat4 matTranslate = glm::translate(glm::mat4(1.0f), -cPosition);
+			glm::mat4 matTranslate = glm::translate(glm::mat4(1.0f), -mPosition);
 
 			// Update view matrix
 			matView = matRotation * matTranslate;
@@ -173,12 +173,12 @@ namespace ProcG
 		// Private member variables
 
 		// Camera quaternion and frame pitch and yaw
-		glm::quat cQuaternion;
+		glm::quat mQuaternion;
 		GLfloat fPitch = 0.0f;
 		GLfloat fYaw = 0.0f;
 
 		// Camera position
-		glm::vec3 cPosition;
+		glm::vec3 mPosition;
 
 		// Variables used for bookkeeping
 		GLboolean resetMouse = true;
@@ -190,8 +190,8 @@ namespace ProcG
 		GLfloat lastYPos = 0.0f;
 
 		// Camera settings
-		GLfloat cMovementSpeed;
-		GLfloat cMouseSensitivity;
+		GLfloat mMovementSpeed;
+		GLfloat mMouseSensitivity;
 
 		// View matrix
 		glm::mat4 matView;

@@ -1,5 +1,7 @@
 #include "shader.hpp"
 
+#include <vector>
+
 /* Helper function that creates a shader from a filename */
 GLuint createShaderObject(std::string const& filename)
 {
@@ -69,13 +71,13 @@ void ProcG::Shader::link()
 	assert(mStatus);
 }
 
-void ProcG::Shader::makeBasicShader(std::string const& vertexFilename,
-	std::string const& fragmentFilename,
-	std::string const& geometryFilename)
+/* Links a list of shader files into a shader program */
+void ProcG::Shader::makeBasicShader(std::vector<std::string> const shaders)
 {
-	attach(vertexFilename);
-	attach(geometryFilename);
-	attach(fragmentFilename);
+	for (int i = 0; i < shaders.size(); i++)
+	{
+		attach(shaders[i].data());
+	}
 	link();
 }
 
