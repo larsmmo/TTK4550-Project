@@ -84,6 +84,11 @@ GLint ProcG::Shader::getUniformFromName(std::string const& uniformName)
 	return glGetUniformLocation(this->get(), uniformName.c_str());
 }
 
+void ProcG::Shader::setUniform1i(std::string const& uniformName, int value)
+{
+	glUniform1i(getUniformFromName(uniformName), value);
+}
+
 void ProcG::Shader::setUniform1fv(std::string const& uniformName, const float* value)
 {
 	glUniform1fv(getUniformFromName(uniformName), 1, value);

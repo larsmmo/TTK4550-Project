@@ -46,6 +46,7 @@ namespace ProcG
 		GLint getUniformFromName(std::string const& uniformName);
 
 		/* Functions for setting uniform variables in shader */
+		void setUniform1i(std::string const& uniformName, int value);
 		void setUniform1fv(std::string const& uniformName, const float* value);
 		void setUniform2fv(std::string const& uniformName, const float* value);
 		void setUniform3fv(std::string const& uniformName, const float* value);

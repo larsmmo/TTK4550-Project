@@ -15,11 +15,9 @@ private:
 
 public:
 	OpenGLContext(Window* window);
-
 	~OpenGLContext();
 
 	void setViewport(int width, int height);
-
 	void clearBuffers();
 };
 

@@ -12,16 +12,12 @@ private:
 
 public:
 	GLFWWindow(const Config& cfg);
-
 	~GLFWWindow();
 
 	unsigned int getWindowWidth();
-
 	unsigned int getWindowHeight();
 
 	void swapDrawBuffers();
-
 	void pollEvents();
-
 	bool shouldClose();
 };

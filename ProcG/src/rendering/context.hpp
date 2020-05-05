@@ -16,8 +16,10 @@ protected:
 
 public:
 	static Context* create(Window* window, const Config& cfg);
+
 	virtual void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 	virtual void clearBuffers() = 0;
+	virtual void bindTexture() = 0;
 };
 
 
