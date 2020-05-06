@@ -4,6 +4,8 @@
 #include "utilities/timeUtilities.h"
 #include "config.h"
 #include "rendering\renderer.hpp"
+#include "sceneGraph.hpp"
+#include "scene.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,11 +16,15 @@
 
 Application::Application()
 {
-	mRenderer = Renderer();
+	
 }
 
 void Application::runApplication()
 {
-	while (mRenderer.draw()) {};		// temporary draw loop
+	// Set up test scene to be rendered
+	SceneNode* rootNode;
+	rootNode = createSceneNode();
+
+	while (mRenderer.draw(rootNode)) {};		// temporary draw loop
 }
 

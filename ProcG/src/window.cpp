@@ -10,7 +10,8 @@ Window* Window::create(const Config& cfg)
 {
 	if (cfg.windowSystem == "GLFW")
 	{
-		return new GLFWWindow(cfg);
+		printf("creat window");
+		return new GLFW_Window(cfg);
 	}
 	else
 	{

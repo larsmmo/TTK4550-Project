@@ -19,6 +19,7 @@ public:
 
 	void setViewport(int width, int height);
 	void clearBuffers();
+	void drawGeometry(SceneNode* node);
 };
 
 

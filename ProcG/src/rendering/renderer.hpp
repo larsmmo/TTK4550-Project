@@ -18,7 +18,7 @@ class Renderer
 {
 private:
 	Context* mRenderContext;
-	ProcG::Shader* mShader;
+	ProcG::Shader* mShader;		// Should be heap allocated
 	ProcG::Camera* mCamera;
 	Window* mWindow;
 

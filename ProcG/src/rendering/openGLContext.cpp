@@ -2,6 +2,7 @@
 #include "context.hpp"
 #include "window.hpp"
 #include "OpenGLContext.hpp"
+#include "sceneGraph.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -31,10 +32,11 @@ OpenGLContext::OpenGLContext(Window* window)
 	printf("GLSL version\t %s\n\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
+/*
 OpenGLContext::~OpenGLContext()
 {
 	
-}
+}*/
 
 void OpenGLContext::setViewport(int width, int height)
 {
@@ -47,3 +49,8 @@ void OpenGLContext::clearBuffers()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void OpenGLContext::drawGeometry(SceneNode* node)
+{
+	glBindVertexArray(node->vertexArrayObjectID);			// TODO: Do this in another way: get rid of context - scenegraph dependency
+	glDrawElements(GL_TRIANGLES, node->VAOIndexCount, GL_UNSIGNED_INT, nullptr);
+}

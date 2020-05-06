@@ -5,14 +5,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class GLFWWindow : public Window
+class GLFW_Window : public Window
 {
 private:
-	static GLFWwindow* mWindow;
+	GLFWwindow* mWindow;
 
 public:
-	GLFWWindow(const Config& cfg);
-	~GLFWWindow();
+	GLFW_Window(const Config& cfg);
+	~GLFW_Window();
 
 	unsigned int getWindowWidth();
 	unsigned int getWindowHeight();

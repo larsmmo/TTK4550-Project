@@ -1,4 +1,3 @@
-#include "engine.hpp"
 #include "glUtilities.h"
 
 #include <glad/glad.h>

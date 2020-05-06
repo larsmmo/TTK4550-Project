@@ -20,23 +20,23 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
-	camera.handleKeyboardInputs(key, action);
+	//camera.handleKeyboardInputs(key, action);
 }
 
-// GLFW window callback function for handling mouse position input			// Move these to window class
+// GLFW window callback function for handling mouse position input			
 void mouseCallback(GLFWwindow* window, double x, double y)
 {
-	camera.handleCursorPosInput(x, y);
+	//camera.handleCursorPosInput(x, y);							// TODO: Move camera dependency
 	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
 }
 
 // GLFW window callback function for handling mouse button input
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	camera.handleMouseButtonInputs(button, action);
+	//camera.handleMouseButtonInputs(button, action);
 }
 
-GLFWWindow::GLFWWindow(const Config& cfg)
+GLFW_Window::GLFW_Window(const Config& cfg)
 {
 	// Initializing GLFW			// TODO: move to window class
 	if (!glfwInit())
@@ -59,6 +59,7 @@ GLFWWindow::GLFWWindow(const Config& cfg)
 	mWindowWidth = cfg.windowWidth;
 	mWindowHeight = cfg.windowHeight;
 
+	printf("CREATING WINDOW \n");
 	mWindow = glfwCreateWindow(mWindowWidth,
 		mWindowHeight,
 		cfg.windowTitle.c_str(),
@@ -70,7 +71,7 @@ GLFWWindow::GLFWWindow(const Config& cfg)
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-
+	
 	// Make the context of the window be the main context of current thread
 	glfwMakeContextCurrent(mWindow);
 
@@ -81,37 +82,37 @@ GLFWWindow::GLFWWindow(const Config& cfg)
 	glfwSetKeyCallback(mWindow, keyCallback);
 }
 
-GLFWWindow::~GLFWWindow()
+GLFW_Window::~GLFW_Window()
 {
 	// Delete all of GLFW's allocated resources
 	glfwTerminate();
 }
 
 /* Updates and returns the height of the window*/
-unsigned int GLFWWindow::getWindowHeight()
+unsigned int GLFW_Window::getWindowHeight()
 {
 	glfwGetWindowSize(mWindow, &mWindowWidth, &mWindowHeight);
 	return mWindowHeight;
 }
 
 /* Updates and returns the width of the window*/
-unsigned int GLFWWindow::getWindowWidth()
+unsigned int GLFW_Window::getWindowWidth()
 {
 	glfwGetWindowSize(mWindow, &mWindowWidth, &mWindowHeight);
 	return mWindowWidth;
 }
 
-void GLFWWindow::swapDrawBuffers()
+void GLFW_Window::swapDrawBuffers()
 {
 	glfwSwapBuffers(mWindow);
 }
 
-void GLFWWindow::pollEvents()
+void GLFW_Window::pollEvents()
 {
 	glfwPollEvents();
 }
 
-bool GLFWWindow::shouldClose()
+bool GLFW_Window::shouldClose()
 {
 	return glfwWindowShouldClose(mWindow);
 }

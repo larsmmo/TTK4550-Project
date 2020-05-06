@@ -4,6 +4,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+/* Window Factory for producing concrete windows*/
+
 class Window
 {
 protected:

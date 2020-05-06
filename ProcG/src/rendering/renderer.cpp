@@ -12,6 +12,7 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -70,13 +71,11 @@ bool Renderer::draw(SceneNode* rootNode)			// TODO: change to per-node drawing
 
 		mWindow->swapDrawBuffers();
 
-		// Check if window has captured any events happening
+		// Check if window has captured any events
 		mWindow->pollEvents();
 	}
-
 	return true;
 }
-
 
 void Renderer::renderNode(SceneNode* node)
 {
@@ -91,17 +90,18 @@ void Renderer::renderNode(SceneNode* node)
 	{
 	case GEOMETRY:
 		if (node->vertexArrayObjectID != -1) {
-			glBindVertexArray(node->vertexArrayObjectID);
-			glDrawElements(GL_TRIANGLES, node->VAOIndexCount, GL_UNSIGNED_INT, nullptr);
+			mRenderContext->drawGeometry(node);
 		}
 		break;
 	case POINT_LIGHT:
 		{
+		/*
 		GLint location_position = shader->getUniformFromName(fmt::format("pointLights[{}].position", node->vertexArrayObjectID));		// Vertex array obj ID = light ID
 		glUniform3fv(location_position, 1, glm::value_ptr(lightSources[node->vertexArrayObjectID].worldPos));
 
 		GLint location_color = shader->getUniformFromName(fmt::format("pointLights[{}].color", node->vertexArrayObjectID));
 		glUniform3fv(location_color, 1, glm::value_ptr(lightSources[node->vertexArrayObjectID].color));
+		*/
 		break;
 		}
 	case SPOT_LIGHT: break;
