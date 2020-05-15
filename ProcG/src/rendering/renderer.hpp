@@ -3,13 +3,11 @@
 #pragma once
 
 #include "sceneGraph.hpp"
-#include "camera.hpp"
 #include "shader.hpp"
 #include "context.hpp"
 #include "config.h"
 #include "window.hpp"
 #include "camera.hpp"
-#include "utilities\timeUtilities.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
