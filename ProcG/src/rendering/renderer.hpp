@@ -25,7 +25,7 @@ public:
 	Renderer();
 	bool draw(Scene* scene);
 	void updateFrame(Scene* scene);
-	void renderFrame(SceneNode* rootNode);
+	void renderFrame(Scene* scene);
 	void renderNode(SceneNode* node);
 };
 

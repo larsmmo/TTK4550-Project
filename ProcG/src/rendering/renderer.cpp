@@ -40,28 +40,28 @@ void Renderer::updateFrame(Scene* scene)
 	mShader->setUniform3fv("cameraPosition", glm::value_ptr(mCamera->getPosition()));
 
 	// Update light positions and colors and send to shader
-	mShader->setUniform1i("activeLights", scene->getActiveLights());
-	for (unsigned int light = 0; light < scene->getActiveLights(); light++)
+	mShader->setUniform1i("activeLights", scene->activeLights);
+	for (unsigned int light = 0; light < scene->activeLights; light++)
 	{
-		mShader->setLightSourceUniforms(light, )
+		mShader->setLightSourceUniforms(light, scene->lightSources[light].position);
 	}
 
 	// Calculate VP matrix and MVP matrix for all scene nodes
 	glm::mat4 projection = glm::perspective(glm::radians(80.0f), float(mWindow->getWindowWidth()) / float(mWindow->getWindowHeight()), 0.1f, 350.f);
 	glm::mat4 ViewProjection = projection * mCamera->getViewMatrix();
 
-	updateSceneNodeTransformations(scene->getScene(), glm::mat4(1.0f), ViewProjection);
+	updateSceneNodeTransformations(scene->rootNode, glm::mat4(1.0f), ViewProjection);
 }
 
 
 /* Renders a scene from objects in a Scene Graph */
-void Renderer::renderFrame(SceneNode* rootNode)
+void Renderer::renderFrame(Scene* scene)
 {
 	int windowWidth = mWindow->getWindowWidth();
 	int windowHeight = mWindow->getWindowHeight();
 	mRenderContext->setViewport(windowWidth, windowHeight);
 
-	renderNode(rootNode);
+	renderNode(scene->rootNode);
 }
 
 
@@ -74,7 +74,7 @@ bool Renderer::draw(Scene* scene)			// TODO: change to per-node drawing
 
 		// Update and render a frame with scene information
 		updateFrame(scene);
-		renderFrame(scene->getScene());
+		renderFrame(scene);
 
 		mWindow->swapDrawBuffers();
 

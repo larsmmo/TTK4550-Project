@@ -4,28 +4,19 @@
 
 #include "sceneGraph.hpp"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 struct LightSource {
 	SceneNode* lightNode;
 	glm::vec3 color;
 };
 
-/* The Scene class is responsible for setting up and updating scenes before being rendered */
-class Scene
+/* Scene structure which contains everything needed for rendering */
+struct Scene			// TODO: MAKE scenemanager
 {
-private:
 	SceneNode* rootNode;
-	std::vector<LightSource> lightSources;
-	unsigned int activeLights;
 
-public:
-	Scene();
-	//void loadScene();
-	SceneNode* getScene();
-	unsigned int getActiveLights();
-	void updateScene();
+	std::vector<LightSource> lightSources;
+
+	unsigned int activeLights;
 };
 
 #endif

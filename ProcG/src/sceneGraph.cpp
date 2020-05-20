@@ -44,11 +44,7 @@ void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThu
 
 	switch (node->nodeType) {
 	case GEOMETRY: break;
-	case POINT_LIGHT:
-		// Calculating the world coordinates of a light source by multiplying the transformation matrix by the origin of the world space
-		//glm::vec4 origin = glm::vec4(0, 0, 0, 1.0);
-		//lightSources[node->vertexArrayObjectID].worldPos = glm::vec3(node->currentTransformationMatrix * origin);
-		break;
+	case POINT_LIGHT:break;
 	case SPOT_LIGHT: break;
 	}
 
