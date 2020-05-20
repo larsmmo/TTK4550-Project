@@ -17,6 +17,5 @@ int main(int argc, char* argb[])
 
 	app.runApplication();
 
-
 	return EXIT_SUCCESS;
 }

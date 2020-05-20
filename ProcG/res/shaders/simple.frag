@@ -81,7 +81,7 @@ void main()
 
 	for (int i = 0; i < numLights; i++)
 	{
-		vec3 lightDir = normalize(pointLights[i].position - fs_in.fragPos);									// Is it better to declare the variables outside of loop to avoid construction and destruction? (better performance?)
+		vec3 lightDir = normalize(pointLights[i].position - fs_in.fragPos);	
 		vec3 reflectDir = reflect(-lightDir, norm);
 
 		float lightDistance = length(pointLights[i].position - fs_in.fragPos);

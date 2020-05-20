@@ -37,7 +37,7 @@ Scene::Scene()
 	int activeLights = 3;
 	LightSource lightSources[3];
 
-	// Create some funky light sources
+	// Create some light sources
 	for (int light = 0; light < activeLights; light++) {
 		lightSources[light].lightNode = createSceneNode();
 		lightSources[light].lightNode->vertexArrayObjectID = light;
@@ -61,8 +61,16 @@ Scene::Scene()
 	// Set up cubemap and frame buffer for shadow mapping
 	//glGenFramebuffers(1, &depthMapFrameBuffer);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+}
+
+SceneNode* Scene::getScene() {
+	return rootNode;
+}
+
+unsigned int Scene::getActiveLights() {
+	return activeLights;
 }
 
 void Scene::updateScene()

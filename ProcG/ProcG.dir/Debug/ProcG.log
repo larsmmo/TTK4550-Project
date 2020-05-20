@@ -1,33 +1,4 @@
-﻿  application.cpp
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(58): warning C4201: nonstandard extension used: nameless struct/union
-  c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(137): note: see reference to class template instantiation 'glm::qua<T,Q>' being compiled
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(85): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(86): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(91): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(95): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-  main.cpp
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(58): warning C4201: nonstandard extension used: nameless struct/union
-  c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(137): note: see reference to class template instantiation 'glm::qua<T,Q>' being compiled
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(85): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(86): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(91): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(95): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\main.cpp(14): warning C4100: 'argb': unreferenced formal parameter
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\main.cpp(14): warning C4100: 'argc': unreferenced formal parameter
-  effects.cpp
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(58): warning C4201: nonstandard extension used: nameless struct/union
-  c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(137): note: see reference to class template instantiation 'glm::qua<T,Q>' being compiled
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(85): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(86): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(91): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(95): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-  renderer.cpp
+﻿  renderer.cpp
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(58): warning C4201: nonstandard extension used: nameless struct/union
   c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(137): note: see reference to class template instantiation 'glm::qua<T,Q>' being compiled
 C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(85): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
@@ -47,6 +18,5 @@ c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(328): warning C4127: conditional expression is constant
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(330): warning C4127: conditional expression is constant
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(332): warning C4127: conditional expression is constant
-  Generating Code...
   ProcG.vcxproj -> C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\build\ProcG.exe
   ProcG.vcxproj -> C:/Users/Lars Martin/Documents/TTK4550-Project/ProcG/build/ProcG.pdb (Full PDB)

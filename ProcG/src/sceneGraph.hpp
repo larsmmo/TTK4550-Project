@@ -14,7 +14,6 @@
 #include <fstream>
 
 
-
 enum SceneNodeType {
 	GEOMETRY, POINT_LIGHT, SPOT_LIGHT
 };

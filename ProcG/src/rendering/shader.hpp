@@ -52,6 +52,8 @@ namespace ProcG
 		void setUniformMatrix3fv(std::string const& uniformName, bool transpose, const float* value);
 		void setUniformMatrix4fv(std::string const& uniformName, bool transpose, const float* value);
 
+		void setLightSourceUniforms(unsigned int id, const float* position, const float* color);
+
 		/* Helps with debugging the shader program*/
 		bool isValidProgram();
 	};

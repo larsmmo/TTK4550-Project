@@ -1,5 +1,6 @@
 #include "shader.hpp"
 
+#include <fmt/format.h>
 #include <vector>
 
 /* Helper function that creates a shader from a filename */
@@ -114,6 +115,12 @@ void ProcG::Shader::setUniformMatrix3fv(std::string const& uniformName, bool tra
 void ProcG::Shader::setUniformMatrix4fv(std::string const& uniformName, bool transpose, const float* value)
 {
 	glUniformMatrix4fv(getUniformFromName(uniformName), 1, transpose, value);
+}
+
+void ProcG::Shader::setLightSourceUniforms(unsigned int id, const float* position, const float* color)
+{
+	setUniform3fv(fmt::format("pointLights[{}].position", id), position);
+	setUniform3fv(fmt::format("pointLights[{}].color", id), color);
 }
 
 

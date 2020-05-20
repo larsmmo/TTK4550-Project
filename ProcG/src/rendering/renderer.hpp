@@ -3,6 +3,7 @@
 #pragma once
 
 #include "sceneGraph.hpp"
+#include "scene.hpp"
 #include "shader.hpp"
 #include "context.hpp"
 #include "config.h"
@@ -22,8 +23,8 @@ private:
 
 public:
 	Renderer();
-	bool draw(SceneNode* rootNode);
-	void updateFrame(SceneNode* rootNode);
+	bool draw(Scene* scene);
+	void updateFrame(Scene* scene);
 	void renderFrame(SceneNode* rootNode);
 	void renderNode(SceneNode* node);
 };

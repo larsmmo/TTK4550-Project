@@ -59,7 +59,6 @@ GLFW_Window::GLFW_Window(const Config& cfg)
 	mWindowWidth = cfg.windowWidth;
 	mWindowHeight = cfg.windowHeight;
 
-	printf("CREATING WINDOW \n");
 	mWindow = glfwCreateWindow(mWindowWidth,
 		mWindowHeight,
 		cfg.windowTitle.c_str(),

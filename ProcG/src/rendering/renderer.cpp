@@ -1,8 +1,8 @@
 #include "renderer.hpp"
 #include "window.hpp"
-#include "sceneGraph.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
+#include "scene.hpp"
 #include "sceneGraph.hpp"
 #include "utilities/timeUtilities.h"
 #include "camera.hpp"
@@ -31,19 +31,26 @@ Renderer::Renderer()
 	mCamera = new ProcG::Camera();
 }
 
-void Renderer::updateFrame(SceneNode* rootNode)
+void Renderer::updateFrame(Scene* scene)
 {
 	double timeDelta = getTimeDeltaSeconds();
 
-	// Update camera and send its position
+	// Update camera and send its position to shader
 	mCamera->updateCamera(timeDelta);
 	mShader->setUniform3fv("cameraPosition", glm::value_ptr(mCamera->getPosition()));
+
+	// Update light positions and colors and send to shader
+	mShader->setUniform1i("activeLights", scene->getActiveLights());
+	for (unsigned int light = 0; light < scene->getActiveLights(); light++)
+	{
+		mShader->setLightSourceUniforms(light, )
+	}
 
 	// Calculate VP matrix and MVP matrix for all scene nodes
 	glm::mat4 projection = glm::perspective(glm::radians(80.0f), float(mWindow->getWindowWidth()) / float(mWindow->getWindowHeight()), 0.1f, 350.f);
 	glm::mat4 ViewProjection = projection * mCamera->getViewMatrix();
 
-	updateSceneNodeTransformations(rootNode, glm::mat4(1.0f), ViewProjection);
+	updateSceneNodeTransformations(scene->getScene(), glm::mat4(1.0f), ViewProjection);
 }
 
 
@@ -58,16 +65,16 @@ void Renderer::renderFrame(SceneNode* rootNode)
 }
 
 
-bool Renderer::draw(SceneNode* rootNode)			// TODO: change to per-node drawing
+bool Renderer::draw(Scene* scene)			// TODO: change to per-node drawing
 {
 	while (!mWindow->shouldClose())
 	{
 		// Clear colour and depth buffers
 		mRenderContext->clearBuffers();
 
-		// Update and render a frame
-		updateFrame(rootNode);
-		renderFrame(rootNode);
+		// Update and render a frame with scene information
+		updateFrame(scene);
+		renderFrame(scene->getScene());
 
 		mWindow->swapDrawBuffers();
 
@@ -95,13 +102,11 @@ void Renderer::renderNode(SceneNode* node)
 		break;
 	case POINT_LIGHT:
 		{
-		/*
-		GLint location_position = shader->getUniformFromName(fmt::format("pointLights[{}].position", node->vertexArrayObjectID));		// Vertex array obj ID = light ID
-		glUniform3fv(location_position, 1, glm::value_ptr(lightSources[node->vertexArrayObjectID].worldPos));
-
+		// Calculate world coordinates of point lights and send them to the active shader
+		mShader->setUniform3fv(fmt::format("pointLights[{}].position", node->vertexArrayObjectID), glm::value_ptr(glm::vec3(node->currentTransformationMatrix * glm::vec4(0, 0, 0, 1.0))));
+		mShader->setUniform3fv(fmt::format("pointLights[{}].color", node->vertexArrayObjectID), glm::value_ptr(
 		GLint location_color = shader->getUniformFromName(fmt::format("pointLights[{}].color", node->vertexArrayObjectID));
 		glUniform3fv(location_color, 1, glm::value_ptr(lightSources[node->vertexArrayObjectID].color));
-		*/
 		break;
 		}
 	case SPOT_LIGHT: break;
