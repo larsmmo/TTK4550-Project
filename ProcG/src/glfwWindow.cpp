@@ -13,25 +13,28 @@ static void glfwErrorCallback(int err, const char* description)
 }
 
 // GLFW window callback function for handling keyboard button input
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
+void GLFW_Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
+	GLFW_Window* windowWrapper = static_cast<GLFW_Window*>(glfwGetWindowUserPointer(window));
+	windowWrapper->handleKeyInputs(key, action);
+
 	//camera.handleKeyboardInputs(key, action);
 }
 
 // GLFW window callback function for handling mouse position input			
-void mouseCallback(GLFWwindow* window, double x, double y)
+void GLFW_Window::mouseCallback(GLFWwindow* window, double x, double y)
 {
 	//camera.handleCursorPosInput(x, y);							// TODO: Move camera dependency
 	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
 }
 
 // GLFW window callback function for handling mouse button input
-void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+void GLFW_Window::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
 	//camera.handleMouseButtonInputs(button, action);
 }
@@ -54,6 +57,8 @@ GLFW_Window::GLFW_Window(const Config& cfg)
 	glfwWindowHint(GLFW_SAMPLES, cfg.windowSamples);
 
 	glfwSetErrorCallback(glfwErrorCallback);
+
+	glfwSetWindowUserPointer(mWindow, this);
 
 	//Create window
 	mWindowWidth = cfg.windowWidth;

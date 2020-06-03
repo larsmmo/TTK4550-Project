@@ -20,11 +20,9 @@ Scene::Scene()
 
 	static SceneNode* groundNode;
 	static SceneNode* boxNode;
-	static SceneNode* terrain
 
 	groundNode = createSceneNode();
 	boxNode = createSceneNode();
-
 
 	const glm::vec3 groundDimensions(180, 1, 90);
 	const glm::vec3 boxDimensions(40, 40, 40);
@@ -39,7 +37,7 @@ Scene::Scene()
 	activeLights = 3;
 
 	// Create some light sources and place them in the scene
-	for (int light = 0; light < activeLights; light++) {
+	for (unsigned int light = 0; light < activeLights; light++) {
 		LightSource pointLight;
 		pointLight.lightNode = createSceneNode();
 		pointLight.lightNode->vertexArrayObjectID = light;
