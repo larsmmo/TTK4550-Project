@@ -9,9 +9,10 @@ struct LightSource {
 	glm::vec3 color;
 };
 
-/* Scene structure which contains everything needed for rendering */
+/* Scene structure which contains scene information for rendering */
 struct Scene			// TODO: MAKE scenemanager
 {
+	Scene();
 	SceneNode* rootNode;
 
 	std::vector<LightSource> lightSources;

@@ -38,7 +38,7 @@ namespace ProcG
 
 
 		/* Handle keyboard inputs from a callback mechanism */
-		void handleKeyboardInputs(int key, int action)
+		void processKeyboardInputs(int key, int action)
 		{
 			// Keep track of pressed/released buttons
 			if (key >= 0 && key < 512)
@@ -56,7 +56,7 @@ namespace ProcG
 
 
 		/* Handle mouse button inputs from a callback mechanism */
-		void handleMouseButtonInputs(int button, int action)
+		void processLeftMouseButtonInputs(int button, int action)
 		{
 			// Ensure that the camera only rotates when the left mouse button is
 			// pressed
@@ -73,7 +73,7 @@ namespace ProcG
 
 
 		/* Handle cursor position from a callback mechanism */
-		void handleCursorPosInput(double xpos, double ypos)
+		void processCursorPosInput(double xpos, double ypos)
 		{
 			// Do nothing if the left mouse button is not pressed
 			if (isMousePressed == false)

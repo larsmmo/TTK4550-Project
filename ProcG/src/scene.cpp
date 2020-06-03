@@ -18,11 +18,13 @@ Scene::Scene()
 {
 	rootNode = createSceneNode();
 
-	SceneNode* groundNode;
-	SceneNode* boxNode;
+	static SceneNode* groundNode;
+	static SceneNode* boxNode;
+	static SceneNode* terrain
 
 	groundNode = createSceneNode();
 	boxNode = createSceneNode();
+
 
 	const glm::vec3 groundDimensions(180, 1, 90);
 	const glm::vec3 boxDimensions(40, 40, 40);
@@ -34,16 +36,17 @@ Scene::Scene()
 	unsigned int boxVAO = generateVAO(box);
 
 	// Using vectors instead. Fixing later...
-	int activeLights = 3;
-	LightSource lightSources[3];
+	activeLights = 3;
 
-	// Create some light sources
+	// Create some light sources and place them in the scene
 	for (int light = 0; light < activeLights; light++) {
-		lightSources[light].lightNode = createSceneNode();
-		lightSources[light].lightNode->vertexArrayObjectID = light;
-		lightSources[light].lightNode->nodeType = POINT_LIGHT;
-		lightSources[light].color[light] = 1.0;
-		groundNode->children.push_back(lightSources[light].lightNode);
+		LightSource pointLight;
+		pointLight.lightNode = createSceneNode();
+		pointLight.lightNode->vertexArrayObjectID = light;
+		pointLight.lightNode->nodeType = POINT_LIGHT;
+		pointLight.color[light] = 1.0;
+		groundNode->children.push_back(pointLight.lightNode);
+		lightSources.push_back(pointLight);
 	}
 
 	rootNode->children.push_back(groundNode);
@@ -62,18 +65,5 @@ Scene::Scene()
 	//glGenFramebuffers(1, &depthMapFrameBuffer);
 
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-}
-
-SceneNode* Scene::getScene() {
-	return rootNode;
-}
-
-unsigned int Scene::getActiveLights() {
-	return activeLights;
-}
-
-void Scene::updateScene()
-{
-	
+	printf("Created scene");
 }

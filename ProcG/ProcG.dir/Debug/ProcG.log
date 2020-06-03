@@ -7,9 +7,9 @@ C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(91): warning
 C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(95): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(39): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(40): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(326): warning C4127: conditional expression is constant
-  C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(43): note: see reference to function template instantiation 'glm::mat<4,4,glm::f32,0> glm::perspective<genType>(T,T,T,T)' being compiled
+  C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(44): note: see reference to function template instantiation 'glm::mat<4,4,glm::f32,0> glm::perspective<genType>(T,T,T,T)' being compiled
           with
           [
               genType=float,
@@ -18,5 +18,7 @@ c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(328): warning C4127: conditional expression is constant
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(330): warning C4127: conditional expression is constant
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(332): warning C4127: conditional expression is constant
-  ProcG.vcxproj -> C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\build\ProcG.exe
-  ProcG.vcxproj -> C:/Users/Lars Martin/Documents/TTK4550-Project/ProcG/build/ProcG.pdb (Full PDB)
+  scene.cpp
+C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\scene.cpp(25): error C2146: syntax error: missing ';' before identifier 'groundNode'
+C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\scene.cpp(42): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...

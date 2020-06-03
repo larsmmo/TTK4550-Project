@@ -44,7 +44,7 @@ void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThu
 
 	switch (node->nodeType) {
 	case GEOMETRY: break;
-	case POINT_LIGHT:break;
+	case POINT_LIGHT: break;
 	case SPOT_LIGHT: break;
 	}
 

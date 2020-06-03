@@ -7,6 +7,7 @@
 #include "utilities/timeUtilities.h"
 #include "camera.hpp"
 
+#include <fmt/format.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -35,22 +36,25 @@ void Renderer::updateFrame(Scene* scene)
 {
 	double timeDelta = getTimeDeltaSeconds();
 
-	// Update camera and send its position to shader
+	// Update camera and send its position to the shader
 	mCamera->updateCamera(timeDelta);
 	mShader->setUniform3fv("cameraPosition", glm::value_ptr(mCamera->getPosition()));
 
-	// Update light positions and colors and send to shader
-	mShader->setUniform1i("activeLights", scene->activeLights);
-	for (unsigned int light = 0; light < scene->activeLights; light++)
-	{
-		mShader->setLightSourceUniforms(light, scene->lightSources[light].position);
-	}
-
 	// Calculate VP matrix and MVP matrix for all scene nodes
 	glm::mat4 projection = glm::perspective(glm::radians(80.0f), float(mWindow->getWindowWidth()) / float(mWindow->getWindowHeight()), 0.1f, 350.f);
-	glm::mat4 ViewProjection = projection * mCamera->getViewMatrix();
+	glm::mat4 viewProjection = projection * mCamera->getViewMatrix();
 
-	updateSceneNodeTransformations(scene->rootNode, glm::mat4(1.0f), ViewProjection);
+	updateSceneNodeTransformations(scene->rootNode, glm::mat4(1.0f), viewProjection);
+
+	// Update light positions and colors, then send to shader
+	mShader->setUniform1i("activeLights", scene->activeLights);
+	
+	for (unsigned int light = 0; light < scene->activeLights; light++)
+	{
+		//mShader->setLightSourceUniforms(light, scene->lightSources[light]->lightNode.currentTransformationMatrix);
+		mShader->setUniform3fv(fmt::format("pointLights[{}].color", light), glm::value_ptr(scene->lightSources[light].color));
+	}
+
 }
 
 
@@ -104,9 +108,7 @@ void Renderer::renderNode(SceneNode* node)
 		{
 		// Calculate world coordinates of point lights and send them to the active shader
 		mShader->setUniform3fv(fmt::format("pointLights[{}].position", node->vertexArrayObjectID), glm::value_ptr(glm::vec3(node->currentTransformationMatrix * glm::vec4(0, 0, 0, 1.0))));
-		mShader->setUniform3fv(fmt::format("pointLights[{}].color", node->vertexArrayObjectID), glm::value_ptr(
-		GLint location_color = shader->getUniformFromName(fmt::format("pointLights[{}].color", node->vertexArrayObjectID));
-		glUniform3fv(location_color, 1, glm::value_ptr(lightSources[node->vertexArrayObjectID].color));
+		//mShader->setUniform3fv(fmt::format("pointLights[{}].color", node->vertexArrayObjectID), glm::value_ptr(
 		break;
 		}
 	case SPOT_LIGHT: break;
