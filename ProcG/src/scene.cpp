@@ -16,7 +16,6 @@
 Scene::Scene()
 {
 	rootNode = createSceneNode();
-	float rootPos =rootnode.getPosition();
 
 	static SceneNode* groundNode;
 	static SceneNode* boxNode;
