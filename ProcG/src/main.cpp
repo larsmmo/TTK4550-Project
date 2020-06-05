@@ -7,7 +7,6 @@
 #include "application.hpp"
 
 // Standard headers
-#include <nlohmann\json.hpp>
 #include <cstdlib>
 #include <string>
 
