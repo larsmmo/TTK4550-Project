@@ -1,17 +1,18 @@
 #include <iostream>
 #include "window.hpp"
 #include "glfwWindow.hpp"
+#include "camera.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 
-Window* Window::create(const Config& cfg)
+Window* Window::create(const Config& cfg, ProcG::Camera* camera)
 {
 	if (cfg.windowSystem == "GLFW")
 	{
-		printf("creat window");
-		return new GLFW_Window(cfg);
+		printf("creating window");
+		return new GLFW_Window(cfg, camera);
 	}
 	else
 	{

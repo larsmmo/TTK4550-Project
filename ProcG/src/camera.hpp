@@ -27,20 +27,15 @@ namespace ProcG
 			updateViewMatrix();
 		}
 
-		/* Getter for camera position */
 		glm::vec3 getPosition() { return mPosition; }
 
-		/* Getter for camera rotation */
 		glm::mat4 getRotation() { return glm::mat4_cast(inverse(mQuaternion)); }
 
-		/* Getter for the view matrix */
-		glm::mat4 getViewMatrix() { return matView; }
+		glm::mat4 getViewMatrix() { return viewMat; }
 
-
-		/* Handle keyboard inputs from a callback mechanism */
+		/* Function that keeps track of pressed buttons*/
 		void processKeyboardInputs(int key, int action)
 		{
-			// Keep track of pressed/released buttons
 			if (key >= 0 && key < 512)
 			{
 				if (action == GLFW_PRESS)
@@ -54,12 +49,8 @@ namespace ProcG
 			}
 		}
 
-
-		/* Handle mouse button inputs from a callback mechanism */
-		void processLeftMouseButtonInputs(int button, int action)
+		void processMouseButtonInputs(int button, int action)
 		{
-			// Ensure that the camera only rotates when the left mouse button is
-			// pressed
 			if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 			{
 				isMousePressed = true;
@@ -71,15 +62,11 @@ namespace ProcG
 			}
 		}
 
-
-		/* Handle cursor position from a callback mechanism */
 		void processCursorPosInput(double xpos, double ypos)
 		{
-			// Do nothing if the left mouse button is not pressed
 			if (isMousePressed == false)
 				return;
 
-			// There should be no movement when the mouse button is released
 			if (resetMouse)
 			{
 				lastXPos = xpos;
@@ -87,10 +74,9 @@ namespace ProcG
 				resetMouse = false;
 			}
 
-			// Keep track of pitch and yaw for the current frame
-			fYaw = (xpos - lastXPos);
+			fYaw = -(xpos - lastXPos);
 			fPitch = (ypos - lastYPos);
-			// Update last known cursor position
+
 			lastXPos = xpos;
 			lastYPos = ypos;
 		}
@@ -101,18 +87,19 @@ namespace ProcG
 		void updateCamera(GLfloat deltaTime)
 		{
 			// Extract movement information from the view matrix
-			glm::vec3 dirX(matView[0][0], 0.0f, matView[2][0]);
-			glm::vec3 dirY(0.0f, matView[1][1], 0.0f);
-			glm::vec3 dirZ(matView[0][2], 0.0f, matView[2][2]);
-
+			
+			glm::vec3 dirX(viewMat[0][0], 0.0f, viewMat[2][0]);
+			glm::vec3 dirY(0.0f, viewMat[1][1], 0.0f);
+			glm::vec3 dirZ(viewMat[0][2], 0.0f, viewMat[2][2]);
+			
 			// Alter position in the appropriate direction
 			glm::vec3 fMovement(0.0f, 0.0f, 0.0f);
 
 			if (keysInUse[GLFW_KEY_W])  // forward
-				fMovement += dirZ;
+				fMovement -= dirZ;
 
 			if (keysInUse[GLFW_KEY_S])  // backward
-				fMovement -= dirZ;
+				fMovement += dirZ;
 
 			if (keysInUse[GLFW_KEY_A])  // left
 				fMovement -= dirX;
@@ -126,7 +113,7 @@ namespace ProcG
 			if (keysInUse[GLFW_KEY_Q])  // vertical down
 				fMovement -= dirY;
 
-			// Trick to balance PC speed with movement
+			// Make sure movement speed is dependent on framerate
 			GLfloat velocity = mMovementSpeed * deltaTime;
 
 			// Update camera position using the appropriate velocity
@@ -157,17 +144,17 @@ namespace ProcG
 			fYaw = 0.0f;
 
 			// Update camera quaternion and normalise
-			mQuaternion = qYaw * mQuaternion * qPitch;
+			mQuaternion = qPitch *  mQuaternion * qYaw;
 			mQuaternion = glm::normalize(mQuaternion);
 
 			// Build rotation matrix using the camera quaternion
-			glm::mat4 matRotation = glm::mat4_cast(inverse(mQuaternion));
+			glm::mat4 matRotation = glm::mat4_cast(mQuaternion);
 
 			// Build translation matrix
 			glm::mat4 matTranslate = glm::translate(glm::mat4(1.0f), -mPosition);
 
 			// Update view matrix
-			matView = matRotation * matTranslate;
+			viewMat = matRotation * matTranslate;
 		}
 
 		// Private member variables
@@ -183,7 +170,7 @@ namespace ProcG
 		// Variables used for bookkeeping
 		GLboolean resetMouse = true;
 		GLboolean isMousePressed = false;
-		GLboolean keysInUse[512];
+		GLboolean keysInUse[512] = { false };
 
 		// Last cursor position
 		GLfloat lastXPos = 0.0f;
@@ -194,7 +181,7 @@ namespace ProcG
 		GLfloat mMouseSensitivity;
 
 		// View matrix
-		glm::mat4 matView;
+		glm::mat4 viewMat;
 	};
 }
 

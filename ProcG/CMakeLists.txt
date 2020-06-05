@@ -52,6 +52,13 @@ add_subdirectory (lib/glfw)
 add_subdirectory (lib/fmt)
 
 #
+# Nlohmann JSON parser
+#
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory (lib/nlohmann_json)
+
+
+#
 # GLAD
 #
 if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/lib/glad/include)
@@ -82,12 +89,11 @@ include_directories (src/
                      lib/lodepng/
                      lib/stb/)
 
-
 #
 # Add files
 #
 file (GLOB         VENDORS_SOURCES lib/glad/src/glad.c
-								   lib/lodepng/lodepng.cpp)
+				   lib/lodepng/lodepng.cpp)
 file (GLOB_RECURSE PROJECT_HEADERS src/*.hpp
                                    src/*.h)
 file (GLOB_RECURSE PROJECT_SOURCES src/*.cpp
@@ -114,13 +120,16 @@ source_group ("libraries" FILES ${VENDORS_SOURCES})
 #
 # Set executable and target link libraries
 #
+
 add_definitions (-DGLFW_INCLUDE_NONE
                  -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
 add_executable (${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                 ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
                                 ${VENDORS_SOURCES})
+
 target_link_libraries (${PROJECT_NAME}
                        glfw
                        fmt::fmt
+		       nlohmann_json::nlohmann_json
                        ${GLFW_LIBRARIES}
                        ${GLAD_LIBRARIES})

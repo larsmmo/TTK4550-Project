@@ -1,6 +1,7 @@
 #pragma once
 #include "config.h"
 #include "window.hpp"
+#include "camera.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,8 +15,10 @@ private:
 	static void mouseCallback(GLFWwindow* window, double x, double y);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
+	void setupInputs(ProcG::Camera* camera);
+
 public:
-	GLFW_Window(const Config& cfg);
+	GLFW_Window(const Config& cfg, ProcG::Camera* camera);
 	~GLFW_Window();
 
 	unsigned int getWindowWidth();

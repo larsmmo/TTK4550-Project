@@ -1,7 +1,7 @@
 #include <iostream>
 #include "glfwWindow.hpp"
 #include "window.hpp"
-
+#include "camera.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -12,7 +12,7 @@ static void glfwErrorCallback(int err, const char* description)
 	fprintf(stderr, "GLFW error: \n \t%s (%i)\n", description, err);
 }
 
-// GLFW window callback function for handling keyboard button input
+// GLFW window callback function for handling keyboard button input. 
 void GLFW_Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -20,26 +20,25 @@ void GLFW_Window::keyCallback(GLFWwindow* window, int key, int scancode, int act
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
-	GLFW_Window* windowWrapper = static_cast<GLFW_Window*>(glfwGetWindowUserPointer(window));
-	windowWrapper->handleKeyInputs(key, action);
-
-	//camera.handleKeyboardInputs(key, action);
+	ProcG::Camera* inputWrapper = static_cast<ProcG::Camera*>(glfwGetWindowUserPointer(window));
+	inputWrapper->processKeyboardInputs(key, action);
 }
 
-// GLFW window callback function for handling mouse position input			
+// GLFW window callback function for handling mouse position input
 void GLFW_Window::mouseCallback(GLFWwindow* window, double x, double y)
 {
-	//camera.handleCursorPosInput(x, y);							// TODO: Move camera dependency
-	//glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
+	ProcG::Camera* inputWrapper = static_cast<ProcG::Camera*>(glfwGetWindowUserPointer(window));
+	inputWrapper->processCursorPosInput(x, y);
 }
 
 // GLFW window callback function for handling mouse button input
 void GLFW_Window::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	//camera.handleMouseButtonInputs(button, action);
+	ProcG::Camera* inputWrapper = static_cast<ProcG::Camera*>(glfwGetWindowUserPointer(window));
+	inputWrapper->processMouseButtonInputs(button, action);
 }
 
-GLFW_Window::GLFW_Window(const Config& cfg)
+GLFW_Window::GLFW_Window(const Config& cfg, ProcG::Camera* camera)
 {
 	// Initializing GLFW			// TODO: move to window class
 	if (!glfwInit())
@@ -57,8 +56,6 @@ GLFW_Window::GLFW_Window(const Config& cfg)
 	glfwWindowHint(GLFW_SAMPLES, cfg.windowSamples);
 
 	glfwSetErrorCallback(glfwErrorCallback);
-
-	glfwSetWindowUserPointer(mWindow, this);
 
 	//Create window
 	mWindowWidth = cfg.windowWidth;
@@ -79,17 +76,25 @@ GLFW_Window::GLFW_Window(const Config& cfg)
 	// Make the context of the window be the main context of current thread
 	glfwMakeContextCurrent(mWindow);
 
-	// Set up callback functions for input
-	glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(mWindow, mouseCallback);
-	glfwSetMouseButtonCallback(mWindow, mouseButtonCallback);
-	glfwSetKeyCallback(mWindow, keyCallback);
+	setupInputs(camera);
 }
 
 GLFW_Window::~GLFW_Window()
 {
 	// Delete all of GLFW's allocated resources
 	glfwTerminate();
+}
+
+void GLFW_Window::setupInputs(ProcG::Camera* camera)
+{
+	glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// Allow callback functions to access the inputReceiver
+	glfwSetWindowUserPointer(mWindow, camera);
+
+	glfwSetCursorPosCallback(mWindow, mouseCallback);
+	glfwSetMouseButtonCallback(mWindow, mouseButtonCallback);
+	glfwSetKeyCallback(mWindow, keyCallback);
 }
 
 /* Updates and returns the height of the window*/

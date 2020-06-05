@@ -9,7 +9,7 @@
 struct Config {
 	const std::string	graphicsAPI = "OpenGL";
 	const std::string	windowSystem = "GLFW";
-	const int			windowWidth = 1280;
+	const int			windowWidth = 1600;
 	const int			windowHeight = 720;
 	const std::string	windowTitle = "OpenGL Window";
 	const GLint			windowResizable = GL_FALSE;

@@ -11,13 +11,21 @@ struct PointLight {
     vec3 color;
 };
 
+struct DirectionalLight {
+	vec3 direction;
+	vec3 color;
+};
+
 #define MAX_LIGHTS 6
 
 uniform PointLight pointLights[MAX_LIGHTS];
 
+uniform DirectionalLight directionalLights[MAX_LIGHTS];
+
 uniform samplerCube depthMap[MAX_LIGHTS];
 
-uniform layout(location = 6) int numLights;
+uniform layout(location = 6) int activePointLights;
+uniform int activeDirectionalLights;
 
 uniform layout(location = 10) vec3 cameraPosition;
 
@@ -79,7 +87,25 @@ void main()
 	vec3 diffuse;
 	vec3 specular;
 
-	for (int i = 0; i < numLights; i++)
+	// Calculate directional light
+	for (int i = 0; i < activeDirectionalLights; i++)
+	{
+		vec3 lightDir = normalize(-pointLights[i].position);	
+		vec3 reflectDir = reflect(-lightDir, norm);
+
+		float lightDistance = length(pointLights[i].position - fs_in.fragPos);
+
+		float shadow = calculateShadow(fs_in.fragPos, pointLights[i].position, i);
+
+		float diff = max(dot(norm,lightDir), 0.0) * (1 - shadow);
+		float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32) * (1 - shadow); 
+
+		ambient += ambientStrength * pointLights[i].color;
+		diffuse += diff * pointLights[i].color;
+		specular += specularStrength * spec * pointLights[i].color;
+	}
+
+	for (int i = 0; i < activePointLights; i++)
 	{
 		vec3 lightDir = normalize(pointLights[i].position - fs_in.fragPos);	
 		vec3 reflectDir = reflect(-lightDir, norm);

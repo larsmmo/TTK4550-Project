@@ -10,7 +10,6 @@
 #include "shapes.h"
 #include "rendering/glUtilities.h"
 
-// Standard headers
 #include <cstdlib>
 #include <string>
 
@@ -24,7 +23,7 @@ Scene::Scene()
 	groundNode = createSceneNode();
 	boxNode = createSceneNode();
 
-	const glm::vec3 groundDimensions(180, 1, 90);
+	const glm::vec3 groundDimensions(30, 1, 90);
 	const glm::vec3 boxDimensions(40, 40, 40);
 
 	Mesh ground = cube(groundDimensions, glm::vec2(90), true, true);
@@ -34,17 +33,17 @@ Scene::Scene()
 	unsigned int boxVAO = generateVAO(box);
 
 	// Using vectors instead. Fixing later...
-	activeLights = 3;
+	activePointLights = 1;
 
 	// Create some light sources and place them in the scene
-	for (unsigned int light = 0; light < activeLights; light++) {
-		LightSource pointLight;
+	for (unsigned int light = 0; light < activePointLights; light++) {
+		PointLightSource pointLight;
 		pointLight.lightNode = createSceneNode();
 		pointLight.lightNode->vertexArrayObjectID = light;
 		pointLight.lightNode->nodeType = POINT_LIGHT;
 		pointLight.color[light] = 1.0;
 		groundNode->children.push_back(pointLight.lightNode);
-		lightSources.push_back(pointLight);
+		pointLightSources.push_back(pointLight);
 	}
 
 	rootNode->children.push_back(groundNode);
@@ -55,9 +54,6 @@ Scene::Scene()
 
 	boxNode->vertexArrayObjectID = boxVAO;
 	boxNode->VAOIndexCount = box.indices.size();
-
-	// Send number of lights in the ON-state to the shader
-	glUniform1i(6, activeLights);
 
 	// Set up cubemap and frame buffer for shadow mapping
 	//glGenFramebuffers(1, &depthMapFrameBuffer);

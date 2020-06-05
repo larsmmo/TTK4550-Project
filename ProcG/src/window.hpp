@@ -1,18 +1,18 @@
 #pragma once
 #include "config.h"
+#include "camera.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 /* Window Factory for producing concrete windows*/
-
 class Window
 {
 protected:
 	int mWindowHeight;
 	int mWindowWidth;
 public:
-	static Window* create(const Config& cfg);
+	static Window* create(const Config& cfg, ProcG::Camera* camera);
 
 	virtual unsigned int getWindowWidth() = 0;
 	virtual unsigned int getWindowHeight() = 0;

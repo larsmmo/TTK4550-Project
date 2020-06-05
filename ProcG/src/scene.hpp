@@ -4,20 +4,22 @@
 
 #include "sceneGraph.hpp"
 
-struct LightSource {
+
+struct PointLightSource {
 	SceneNode* lightNode;
 	glm::vec3 color;
 };
 
-/* Scene structure which contains scene information for rendering */
-struct Scene			// TODO: MAKE scenemanager
+/* Structure which contains scene information for rendering */
+struct Scene
 {
 	Scene();
 	SceneNode* rootNode;
 
-	std::vector<LightSource> lightSources;
+	std::vector<PointLightSource> pointLightSources;
 
-	unsigned int activeLights;
+	unsigned int activePointLights;
+	unsigned int activeDirectionalLights;
 };
 
 #endif

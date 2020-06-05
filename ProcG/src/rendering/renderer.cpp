@@ -8,8 +8,6 @@
 #include "camera.hpp"
 
 #include <fmt/format.h>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -20,16 +18,17 @@
 Renderer::Renderer()
 {
 	Config cfg;								// TODO: add proper config file system
-	mWindow = Window::create(cfg);
+
+	mCamera = new ProcG::Camera(glm::vec3(0.0f, 0.0f, -5.0f));
+	mWindow = Window::create(cfg, mCamera);
 	mRenderContext = Context::create(mWindow, cfg);
 
 	// Create shader program				// TODO: Move this part into a shaderManager
-	mShader = new ProcG::Shader();			// see if I can change this part also
+	mShader = new ProcG::Shader();
 	std::vector<std::string> basicShaderFiles{ "../res/shaders/simple.vert", "../res/shaders/simple.frag" };
 	mShader->makeBasicShader(basicShaderFiles);
 	mShader->activate();
 
-	mCamera = new ProcG::Camera();
 }
 
 void Renderer::updateFrame(Scene* scene)
@@ -47,14 +46,13 @@ void Renderer::updateFrame(Scene* scene)
 	updateSceneNodeTransformations(scene->rootNode, glm::mat4(1.0f), viewProjection);
 
 	// Update light positions and colors, then send to shader
-	mShader->setUniform1i("activeLights", scene->activeLights);
+	mShader->setUniform1i("activePointLights", scene->activePointLights);
 	
-	for (unsigned int light = 0; light < scene->activeLights; light++)
+	for (unsigned int light = 0; light < scene->activePointLights; light++)
 	{
 		//mShader->setLightSourceUniforms(light, scene->lightSources[light]->lightNode.currentTransformationMatrix);
-		mShader->setUniform3fv(fmt::format("pointLights[{}].color", light), glm::value_ptr(scene->lightSources[light].color));
+		mShader->setUniform3fv(fmt::format("pointLights[{}].color", light), glm::value_ptr(scene->pointLightSources[light].color));
 	}
-
 }
 
 
@@ -82,12 +80,13 @@ bool Renderer::draw(Scene* scene)			// TODO: change to per-node drawing
 
 		mWindow->swapDrawBuffers();
 
-		// Check if window has captured any events
+		// Check if the window has captured any events
 		mWindow->pollEvents();
 	}
 	return true;
 }
 
+/* Render an object using a scene graph*/
 void Renderer::renderNode(SceneNode* node)
 {
 	// Update uniforms for currently activated shader

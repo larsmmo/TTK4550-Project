@@ -1,24 +1,22 @@
-﻿  renderer.cpp
+﻿  main.cpp
 c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(58): warning C4201: nonstandard extension used: nameless struct/union
   c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\../detail/type_quat.hpp(137): note: see reference to class template instantiation 'glm::qua<T,Q>' being compiled
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(85): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(86): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(91): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\camera.hpp(95): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(40): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(326): warning C4127: conditional expression is constant
-  C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\rendering\renderer.cpp(44): note: see reference to function template instantiation 'glm::mat<4,4,glm::f32,0> glm::perspective<genType>(T,T,T,T)' being compiled
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(72): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(73): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(77): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(78): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(80): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\lars martin\documents\ttk4550-project\procg\src\camera.hpp(81): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\type_traits(184): error C2672: 'std::declval': no matching overloaded function found
+  C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\lib\nlohmann_json\single_include\nlohmann\json.hpp(18873): note: see reference to class template instantiation 'std::add_rvalue_reference<nlohmann::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::adl_serializer,std::vector<uint8_t,std::allocator<_Ty>>> &>' being compiled
           with
           [
-              genType=float,
-              T=float
+              _Ty=uint8_t
           ]
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(328): warning C4127: conditional expression is constant
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(330): warning C4127: conditional expression is constant
-c:\users\lars martin\documents\ttk4550-project\procg\lib\glm\glm\ext\matrix_clip_space.inl(332): warning C4127: conditional expression is constant
-  scene.cpp
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\scene.cpp(25): error C2146: syntax error: missing ';' before identifier 'groundNode'
-C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\src\scene.cpp(42): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+  C:\Users\Lars Martin\Documents\TTK4550-Project\ProcG\lib\nlohmann_json\single_include\nlohmann\json.hpp(24379): note: see reference to class template instantiation 'nlohmann::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::adl_serializer,std::vector<uint8_t,std::allocator<_Ty>>>' being compiled
+          with
+          [
+              _Ty=uint8_t
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\type_traits(184): error C2770: invalid explicit template argument(s) for 'add_rvalue_reference<_Ty>::type std::declval(void) noexcept'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\include\type_traits(190): note: see declaration of 'std::declval'
