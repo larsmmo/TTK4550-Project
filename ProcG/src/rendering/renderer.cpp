@@ -96,6 +96,8 @@ void Renderer::renderNode(SceneNode* node)
 	glm::mat3 normalMatrix = glm::mat3(transpose(inverse(node->currentTransformationMatrix)));
 	mShader->setUniformMatrix3fv("normalMatrix", false, glm::value_ptr(normalMatrix));
 
+	node->material->getShader()->setUniformMatrix4fv("MVP", false, glm::value_ptr(node->MVPMatrix));
+
 	switch (node->nodeType)				// Maybe implement as iterator or strategy pattern instead
 	{
 	case GEOMETRY:
