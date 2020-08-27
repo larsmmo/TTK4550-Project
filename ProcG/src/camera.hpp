@@ -16,7 +16,7 @@ namespace ProcG
 	{
 	public:
 		Camera(glm::vec3 position = glm::vec3(0.0f, 1.0f, 0.0f),
-			GLfloat   movementSpeed = 5.0f,
+			GLfloat   movementSpeed = 10.0f,
 			GLfloat   mouseSensitivity = 0.005f)
 		{
 			mPosition = position;
@@ -40,11 +40,11 @@ namespace ProcG
 			{
 				if (action == GLFW_PRESS)
 				{
-					keysInUse[key] = true;
+					pressedKeys[key] = true;
 				}
 				else if (action == GLFW_RELEASE)
 				{
-					keysInUse[key] = false;
+					pressedKeys[key] = false;
 				}
 			}
 		}
@@ -74,8 +74,8 @@ namespace ProcG
 				resetMouse = false;
 			}
 
-			fYaw = -(xpos - lastXPos);
-			fPitch = (ypos - lastYPos);
+			currentYaw = (xpos - lastXPos);
+			currentPitch = (ypos - lastYPos);
 
 			lastXPos = xpos;
 			lastYPos = ypos;
@@ -95,22 +95,22 @@ namespace ProcG
 			// Alter position in the appropriate direction
 			glm::vec3 fMovement(0.0f, 0.0f, 0.0f);
 
-			if (keysInUse[GLFW_KEY_W])  // forward
+			if (pressedKeys[GLFW_KEY_W])  // forward
 				fMovement -= dirZ;
 
-			if (keysInUse[GLFW_KEY_S])  // backward
+			if (pressedKeys[GLFW_KEY_S])  // backward
 				fMovement += dirZ;
 
-			if (keysInUse[GLFW_KEY_A])  // left
+			if (pressedKeys[GLFW_KEY_A])  // left
 				fMovement -= dirX;
 
-			if (keysInUse[GLFW_KEY_D])  // right
+			if (pressedKeys[GLFW_KEY_D])  // right
 				fMovement += dirX;
 
-			if (keysInUse[GLFW_KEY_E])  // vertical up
+			if (pressedKeys[GLFW_KEY_E])  // vertical up
 				fMovement += dirY;
 
-			if (keysInUse[GLFW_KEY_Q])  // vertical down
+			if (pressedKeys[GLFW_KEY_Q])  // vertical down
 				fMovement -= dirY;
 
 			// Make sure movement speed is dependent on framerate
@@ -132,16 +132,16 @@ namespace ProcG
 		void updateViewMatrix()
 		{
 			// Adjust cursor movement using the specified sensitivity
-			fPitch *= mMouseSensitivity;
-			fYaw *= mMouseSensitivity;
+			currentPitch *= mMouseSensitivity;
+			currentYaw *= mMouseSensitivity;
 
 			// Create quaternions given the current pitch and yaw
-			glm::quat qPitch = glm::quat(glm::vec3(fPitch, 0.0f, 0.0f));
-			glm::quat qYaw = glm::quat(glm::vec3(0.0f, fYaw, 0.0f));
+			glm::quat qPitch = glm::quat(glm::vec3(currentPitch, 0.0f, 0.0f));
+			glm::quat qYaw = glm::quat(glm::vec3(0.0f, currentYaw, 0.0f));
 
 			// Reset pitch and yaw values for the current rotation
-			fPitch = 0.0f;
-			fYaw = 0.0f;
+			currentPitch = 0.0f;
+			currentYaw = 0.0f;
 
 			// Update camera quaternion and normalise
 			mQuaternion = qPitch *  mQuaternion * qYaw;
@@ -157,20 +157,19 @@ namespace ProcG
 			viewMat = matRotation * matTranslate;
 		}
 
-		// Private member variables
-
-		// Camera quaternion and frame pitch and yaw
 		glm::quat mQuaternion;
-		GLfloat fPitch = 0.0f;
-		GLfloat fYaw = 0.0f;
+		glm::mat4 viewMat;
+
+		GLfloat currentPitch = 0.0f;
+		GLfloat currentYaw = 0.0f;
 
 		// Camera position
 		glm::vec3 mPosition;
 
-		// Variables used for bookkeeping
+		// Input states
 		GLboolean resetMouse = true;
 		GLboolean isMousePressed = false;
-		GLboolean keysInUse[512] = { false };
+		GLboolean pressedKeys[512] = { false };
 
 		// Last cursor position
 		GLfloat lastXPos = 0.0f;
@@ -179,9 +178,6 @@ namespace ProcG
 		// Camera settings
 		GLfloat mMovementSpeed;
 		GLfloat mMouseSensitivity;
-
-		// View matrix
-		glm::mat4 viewMat;
 	};
 }
 

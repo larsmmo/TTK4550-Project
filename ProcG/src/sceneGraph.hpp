@@ -15,27 +15,32 @@
 
 
 enum SceneNodeType {
-	GEOMETRY, POINT_LIGHT, SPOT_LIGHT
+	GEOMETRY, 
+	DIRECTIONAL_LIGHT, 
+	POINT_LIGHT,
+	SKY_BOX
 };
 
 struct SceneNode {
 	SceneNode() {
-		position = glm::vec3(0, 0, 0);
-		rotation = glm::vec3(0, 0, 0);
+		pos = glm::vec3(0, 0, 0);
+		rot = glm::vec3(0, 0, 0);
 		scale = glm::vec3(1, 1, 1);
 
-        referencePoint = glm::vec3(0, 0, 0);
-        vertexArrayObjectID = -1;
+        refPoint = glm::vec3(0, 0, 0);
+        VAOID = -1;
         VAOIndexCount = 0;
 
         nodeType = GEOMETRY;
 
 	}
+	SceneNodeType nodeType;
+
 	std::vector<SceneNode*> children;
 	
 	// A node's position and rotation relative to its parent
-	glm::vec3 position;
-	glm::vec3 rotation;
+	glm::vec3 pos;
+	glm::vec3 rot;
 	glm::vec3 scale;
 
 	// A transformation matrix representing the transformation of the node's location relative to its parent.
@@ -43,18 +48,16 @@ struct SceneNode {
 
 	glm::mat4 MVPMatrix;
 
-	glm::vec3 referencePoint;
+	glm::vec3 refPoint;
 
-	// The ID of the VAO containing the "appearance" of this SceneNode.
-	int vertexArrayObjectID;
+	// Variables for rendering in OpenGL
+	int VAOID;
 	unsigned int VAOIndexCount;
 
-	// Node type is used to determine how to handle the contents of a node
-	SceneNodeType nodeType;
+	// Texture variables
+	unsigned int textureID;
 };
 
 SceneNode* createSceneNode();
 void addChild(SceneNode* parent, SceneNode* child);
-void printNode(SceneNode* node);
-int totalChildren(SceneNode* parent);
-void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThusFar, glm::mat4 viewProjection);
+void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThusFar, glm::mat4 VP);

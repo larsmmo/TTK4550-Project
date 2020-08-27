@@ -1,0 +1,58 @@
+﻿{"terrain": {
+		"sizeX" : 256,
+		"sizeZ" : 256,
+		"grassTexture" : "grass1.png",
+		"rockTexture" : "rock4.png",
+    "seaLevel": 0,
+  "mountains": [
+    {
+      "mountain": {
+        "posX": 128,
+        "posZ": 128,
+        "dimX": 40,
+        "dimZ": 40,
+        "height": 30
+      }
+    },
+    {
+      "mountain": {
+        "posX": 180,
+        "posZ": 180,
+        "dimX": 40,
+        "dimZ": 40,
+        "height": 30
+      }
+    }
+  ],
+  "lakes": [
+    {
+      "lake": {
+        "posX": 128,
+        "posZ": 128,
+        "dimX": 40,
+        "dimZ": 40,
+        "depth": 10
+      }
+    }
+  ],
+  "roads": [
+    {
+      "road": {
+        "posX": 30,
+        "posZ": 30,
+        "toPosX": 60,
+        "toPosZ": 60,
+        "texture": "road1.jpg"
+      }
+    },
+    { 
+      "road": {
+        "posX": 30,
+        "posZ": 30,
+        "toPosX": 60,
+        "toPosZ": 60
+      }
+    }
+  ]
+	}
+}

@@ -2,10 +2,11 @@
 #include "window.hpp"
 #include "shader.hpp"
 #include "glUtilities.h"
-#include "scene.hpp"
+#include "sceneManager.hpp"
 #include "sceneGraph.hpp"
 #include "utilities/timeUtilities.h"
 #include "camera.hpp"
+#include "texture.hpp"
 
 #include <fmt/format.h>
 #include <iostream>
@@ -23,15 +24,23 @@ Renderer::Renderer()
 	mWindow = Window::create(cfg, mCamera);
 	mRenderContext = Context::create(mWindow, cfg);
 
-	// Create shader program				// TODO: Move this part into a shaderManager
+	// Create shader programs
 	mShader = new ProcG::Shader();
-	std::vector<std::string> basicShaderFiles{ "../res/shaders/simple.vert", "../res/shaders/simple.frag" };
-	mShader->makeBasicShader(basicShaderFiles);
+	std::vector<std::string> phongShaderFiles{ "../res/shaders/simple.vert", "../res/shaders/simple.frag" };
+	mShader->makeBasicShader(phongShaderFiles);
 	mShader->activate();
 
+	mSkyShader = new ProcG::Shader();
+	std::vector<std::string> skyShaderFiles{ "../res/shaders/skyBox.vert", "../res/shaders/skyBox.frag" };
+	mSkyShader->makeBasicShader(skyShaderFiles);
 }
 
-void Renderer::updateFrame(Scene* scene)
+void Renderer::setupTexture(int height, int width, unsigned char* data, SceneNode* node)
+{
+	//mRenderer->setupTexture(height, width, data);
+}
+
+void Renderer::updateFrame(SceneManager* scene)
 {
 	double timeDelta = getTimeDeltaSeconds();
 
@@ -40,24 +49,26 @@ void Renderer::updateFrame(Scene* scene)
 	mShader->setUniform3fv("cameraPosition", glm::value_ptr(mCamera->getPosition()));
 
 	// Calculate VP matrix and MVP matrix for all scene nodes
-	glm::mat4 projection = glm::perspective(glm::radians(80.0f), float(mWindow->getWindowWidth()) / float(mWindow->getWindowHeight()), 0.1f, 350.f);
+	glm::mat4 projection = glm::perspective(glm::radians(75.0f), float(mWindow->getWindowWidth()) / float(mWindow->getWindowHeight()), 0.1f, 350.f);
 	glm::mat4 viewProjection = projection * mCamera->getViewMatrix();
 
 	updateSceneNodeTransformations(scene->rootNode, glm::mat4(1.0f), viewProjection);
 
 	// Update light positions and colors, then send to shader
 	mShader->setUniform1i("activePointLights", scene->activePointLights);
+	mShader->setUniform1i("activeDirectionalLights", scene->activeDirectionalLights);
 	
 	for (unsigned int light = 0; light < scene->activePointLights; light++)
 	{
 		//mShader->setLightSourceUniforms(light, scene->lightSources[light]->lightNode.currentTransformationMatrix);
 		mShader->setUniform3fv(fmt::format("pointLights[{}].color", light), glm::value_ptr(scene->pointLightSources[light].color));
+		mShader->setUniform3fv(fmt::format("directionalLights[{}].color", light), glm::value_ptr(scene->directionalLightSources[light].color));
 	}
 }
 
 
 /* Renders a scene from objects in a Scene Graph */
-void Renderer::renderFrame(Scene* scene)
+void Renderer::renderFrame(SceneManager* scene)
 {
 	int windowWidth = mWindow->getWindowWidth();
 	int windowHeight = mWindow->getWindowHeight();
@@ -66,8 +77,13 @@ void Renderer::renderFrame(Scene* scene)
 	renderNode(scene->rootNode);
 }
 
+void Renderer::renderSky()
+{
+	
+}
 
-bool Renderer::draw(Scene* scene)			// TODO: change to per-node drawing
+// Render loop
+bool Renderer::draw(SceneManager* scene)
 {
 	while (!mWindow->shouldClose())
 	{
@@ -86,8 +102,8 @@ bool Renderer::draw(Scene* scene)			// TODO: change to per-node drawing
 	return true;
 }
 
-/* Render an object using a scene graph*/
-void Renderer::renderNode(SceneNode* node)
+/* Render an object using a scene graph */
+void Renderer::renderNode(SceneNode * node)
 {
 	// Update uniforms for currently activated shader
 	mShader->setUniformMatrix4fv("MVP", false, glm::value_ptr(node->MVPMatrix));
@@ -96,24 +112,40 @@ void Renderer::renderNode(SceneNode* node)
 	glm::mat3 normalMatrix = glm::mat3(transpose(inverse(node->currentTransformationMatrix)));
 	mShader->setUniformMatrix3fv("normalMatrix", false, glm::value_ptr(normalMatrix));
 
+	//node->material->getShader()->setUniformMatrix4fv("MVP", false, glm::value_ptr(node->MVPMatrix));
+
 	switch (node->nodeType)				// Maybe implement as iterator or strategy pattern instead
 	{
 	case GEOMETRY:
-		if (node->vertexArrayObjectID != -1) {
-			mRenderContext->drawGeometry(node);
+		if (node->VAOID != -1) {
+			mRenderContext->drawGeometry(node->VAOID, node->VAOIndexCount, node->textureID);
 		}
 		break;
+	case DIRECTIONAL_LIGHT:
+	{
+		mShader->setUniform3fv(fmt::format("directionalLights[{}].direction", node->VAOID), glm::value_ptr(glm::vec3(node->currentTransformationMatrix * glm::vec4(0, 0, 0, 1.0))));
+		break;
+	}
 	case POINT_LIGHT:
-		{
+	{
 		// Calculate world coordinates of point lights and send them to the active shader
-		mShader->setUniform3fv(fmt::format("pointLights[{}].position", node->vertexArrayObjectID), glm::value_ptr(glm::vec3(node->currentTransformationMatrix * glm::vec4(0, 0, 0, 1.0))));
-		//mShader->setUniform3fv(fmt::format("pointLights[{}].color", node->vertexArrayObjectID), glm::value_ptr(
+		mShader->setUniform3fv(fmt::format("pointLights[{}].position", node->VAOID), glm::value_ptr(glm::vec3(node->currentTransformationMatrix * glm::vec4(0, 0, 0, 1.0))));
 		break;
+	}
+	case SKY_BOX:
+	{
+		glBindVertexArray(node->VAOID);
+		if (node->textureID != -1)
+		{
+			glActiveTexture(GL_TEXTURE0 + 1);
+			glBindTexture(GL_TEXTURE_2D, node->textureID);
 		}
-	case SPOT_LIGHT: break;
+		glDrawElements(GL_TRIANGLES, node->VAOIndexCount, GL_UNSIGNED_INT, nullptr);
+	}
 	}
 
-	for (SceneNode* child : node->children) {
+	for (SceneNode* child : node->children)
+	{
 		renderNode(child);
 	}
 }

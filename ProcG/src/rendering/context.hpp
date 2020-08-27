@@ -20,8 +20,8 @@ public:
 
 	virtual void setViewport(int setWindowWidth, int setWindowHeight) = 0;
 	virtual void clearBuffers() = 0;
-	//virtual void bindTexture() = 0;
-	virtual void drawGeometry(SceneNode* node) = 0;
+	virtual unsigned int setupTexture(int height, int width, int depth, unsigned char* data, bool mipMapping, int textureID) = 0;
+	virtual void drawGeometry(unsigned int VAOID, unsigned int VAOIndexCount, int textureID) = 0;
 };
 
 

@@ -18,55 +18,22 @@ void addChild(SceneNode* parent, SceneNode* child)
 	parent->children.push_back(child);
 }
 
-// Returns the amount of children for a SceneNode
-int totalChildren(SceneNode* parent) 
-{
-	int count = parent->children.size();
-	for (SceneNode* child : parent->children) {
-		count += totalChildren(child);
-	}
-	return count;
-}
-
-void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThusFar, glm::mat4 viewProjection) 
+// Update transforms using transforms above in the hierarchy and a view-projection matrix
+void updateSceneNodeTransformations(SceneNode* node, glm::mat4 transformationThusFar, glm::mat4 VP) 
 {
 	glm::mat4 transformationMatrix =
-		glm::translate(node->position)
-		* glm::translate(node->referencePoint)
-		* glm::rotate(node->rotation.y, glm::vec3(0, 1, 0))
-		* glm::rotate(node->rotation.x, glm::vec3(1, 0, 0))
-		* glm::rotate(node->rotation.z, glm::vec3(0, 0, 1))
+		glm::translate(node->pos)
+		* glm::translate(node->refPoint)
+		* glm::rotate(node->rot.y, glm::vec3(0, 1, 0))
+		* glm::rotate(node->rot.x, glm::vec3(1, 0, 0))
+		* glm::rotate(node->rot.z, glm::vec3(0, 0, 1))
 		* glm::scale(node->scale)
-		* glm::translate(-node->referencePoint);
+		* glm::translate(-node->refPoint);
 
 	node->currentTransformationMatrix = transformationThusFar * transformationMatrix;
-	node->MVPMatrix = viewProjection * node->currentTransformationMatrix;
-
-	switch (node->nodeType) {
-	case GEOMETRY: break;
-	case POINT_LIGHT: break;
-	case SPOT_LIGHT: break;
-	}
+	node->MVPMatrix = VP * node->currentTransformationMatrix;
 
 	for (SceneNode* child : node->children) {
-		updateSceneNodeTransformations(child, node->currentTransformationMatrix, viewProjection);
+		updateSceneNodeTransformations(child, node->currentTransformationMatrix, VP);
 	}
-}
-
-// Prints the content of a SceneNode
-void printNode(SceneNode* node) 
-{
-	printf(
-		"SceneNode {\n"
-		"    Children count: %i\n"
-		"    Rotation: (%f, %f, %f)\n"
-		"    Relative position: (%f, %f, %f)\n"
-		"    Reference point: (%f, %f, %f)\n"
-		"    VAO ID: %i\n"
-		"}\n",
-		int(node->children.size()),
-		node->rotation.x, node->rotation.y, node->rotation.z,
-		node->position.x, node->position.y, node->position.z,
-		node->referencePoint.x, node->referencePoint.y, node->referencePoint.z, 
-		node->vertexArrayObjectID);
 }

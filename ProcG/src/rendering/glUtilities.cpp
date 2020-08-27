@@ -6,7 +6,7 @@
 /* Convenience function that generates buffers and fills them with attributes
    to be used in Vertex array objects */
 template <class T>
-unsigned int generateAttribute(int id, int elementsPerEntry, std::vector<T> data, bool normalize) 
+unsigned int generateAttribute(int id, int elements, std::vector<T> data, bool normalize) 
 {
 	// Setting up buffer, binding it and copying data into it
     unsigned int bufferID;
@@ -15,7 +15,7 @@ unsigned int generateAttribute(int id, int elementsPerEntry, std::vector<T> data
     glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(T), data.data(), GL_STATIC_DRAW);
 
 	// Format specification and enabling of the vertex attribute
-    glVertexAttribPointer(id, elementsPerEntry, GL_FLOAT, normalize ? GL_TRUE : GL_FALSE, sizeof(T), 0);
+    glVertexAttribPointer(id, elements, GL_FLOAT, normalize ? GL_TRUE : GL_FALSE, sizeof(T), 0);
     glEnableVertexAttribArray(id);
 
     return bufferID;
@@ -37,9 +37,9 @@ unsigned int generateVAO(Mesh &mesh)
     }
 
 	// Setting up index buffer, binding it and copying data into it
-    unsigned int indexBufferID;
-    glGenBuffers(1, &indexBufferID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+    unsigned int idxBufferID;
+    glGenBuffers(1, &idxBufferID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxBufferID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), mesh.indices.data(), GL_STATIC_DRAW);
 
     return vaoID;

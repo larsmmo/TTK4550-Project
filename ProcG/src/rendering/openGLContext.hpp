@@ -19,7 +19,9 @@ public:
 
 	void setViewport(int width, int height);
 	void clearBuffers();
-	void drawGeometry(SceneNode* node);
+	unsigned int setupTexture(int height, int width, int depth, unsigned char* data, bool mipMapping, int textureID);
+	void drawGeometry(unsigned int VAOID, unsigned int VAOIndexCount, int textureID);
+
 };
 
 

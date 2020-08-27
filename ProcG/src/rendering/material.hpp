@@ -19,6 +19,10 @@ class Material
 private:
 	ProcG::Shader* mShader;
 
+	int ambient = 0.6;
+	int specular = 1.0;
+	int diffuse = 1.0;
+
 	std::map<std::string, Texture*> textures;
 
 public:

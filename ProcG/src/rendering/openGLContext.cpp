@@ -3,6 +3,7 @@
 #include "window.hpp"
 #include "OpenGLContext.hpp"
 #include "sceneGraph.hpp"
+#include "texture.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -49,8 +50,27 @@ void OpenGLContext::clearBuffers()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLContext::drawGeometry(SceneNode* node)
+unsigned int OpenGLContext::setupTexture(int height, int width, int depth, unsigned char* data, bool mipMapping, int textureID)
 {
-	glBindVertexArray(node->vertexArrayObjectID);			// TODO: Do this in another way: get rid of context - scenegraph dependency
-	glDrawElements(GL_TRIANGLES, node->VAOIndexCount, GL_UNSIGNED_INT, nullptr);
+	Texture texture;
+	if (depth = 0)
+	{
+		texture.generate(height, width, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, mipMapping, data);
+		return texture.getID();
+	}
+	else {
+		texture.generate(height, width, depth, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, mipMapping, data);
+		return texture.getID();
+	}
+}
+
+void OpenGLContext::drawGeometry(unsigned int VAOID, unsigned int VAOIndexCount, int textureID)
+{
+	glBindVertexArray(VAOID);
+	if (textureID != -1)
+	{
+		glActiveTexture(GL_TEXTURE0 + 1);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+	}
+	glDrawElements(GL_TRIANGLES, VAOIndexCount, GL_UNSIGNED_INT, nullptr);
 }

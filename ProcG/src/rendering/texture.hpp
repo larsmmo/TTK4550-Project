@@ -2,6 +2,8 @@
 #define TEXTURE_HPP
 #pragma once
 
+#include <vector>
+
 class Texture
 {
 private:
@@ -21,19 +23,21 @@ private:
 	GLenum mWrapT = GL_REPEAT;            
 	GLenum mWrapR = GL_REPEAT;    
 
-	bool mipMapping = true;
-
 public:
 	Texture();
 	~Texture();
 
-	void generate(unsigned int height, unsigned int width, GLenum internalFormat, GLenum format, GLenum type, void* data);
+	// One generator each for 2D and 3D textures
+	void generate(unsigned int height, unsigned int width, GLenum internalFormat, GLenum format, GLenum type, bool mipMapping, unsigned char* data);
+	void generate(unsigned int height, unsigned int width, unsigned int depth, GLenum internalFormat, GLenum format, GLenum type, bool mipMapping, unsigned char* data);
+
+	// Method for generating a cubemap texture from a vector containing pointers to different images
+	void generateCubeMap(unsigned int height, unsigned int width, unsigned int depth, GLenum internalFormat, GLenum format, GLenum type, std::vector<unsigned char*> data);
 
 	void bind(int unit = -1);
 	void unbind();
 
 	void setWrapping(GLenum mode, bool bind = false);
-	void setMipMapping(bool mipMap);
 
 	unsigned int getID();
 };

@@ -1,5 +1,7 @@
 #version 430 core
 
+// Developed by Lars Martin Moe as a part of TDT4230
+
 in VS_OUT {
 	vec3 normal;
 	vec2 textureCoordinates;
@@ -22,6 +24,10 @@ uniform PointLight pointLights[MAX_LIGHTS];
 
 uniform DirectionalLight directionalLights[MAX_LIGHTS];
 
+layout(binding = 1) uniform sampler2D terrainTexture;
+
+uniform samplerCube skyBox;
+
 uniform samplerCube depthMap[MAX_LIGHTS];
 
 uniform layout(location = 6) int activePointLights;
@@ -31,7 +37,7 @@ uniform layout(location = 10) vec3 cameraPosition;
 
 out vec4 color;
 
-float ambientStrength = 0.2;
+float ambientStrength = 0.6;
 float specularStrength = 1.0;
 
 float constant = 1.0;
@@ -125,6 +131,13 @@ void main()
 
 	float dither = dither(fs_in.textureCoordinates);
 
-	vec3 combined = (ambient + diffuse) * (vec3(0.99, 0.99, 0.99)) + specular + dither;					// last vector = object color 
+	vec3 combined = (ambient + diffuse) * vec3(texture(terrainTexture, fs_in.textureCoordinates)) + specular + dither;					// last vector = object color 
+
 	color = vec4(combined, 1.0);
+
+	if (fs_in.fragPos.y <-3.0)
+	{
+		color = vec4(combined, 0.5);
+		//color = vec4(0.1, 0.3, 0.9, 0.5);
+	}
 }

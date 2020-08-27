@@ -4,7 +4,7 @@
 
 #include "mesh.h"
 
-/* Generates a Vertex Array Object and copies attributes from a mesh into it */
+/* Fills VBOs with mesh attributes and links them to a VAO*/
 unsigned int generateVAO(Mesh &mesh);
 
 #endif
